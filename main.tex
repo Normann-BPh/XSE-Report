@@ -1,0 +1,66 @@
+\documentclass[9pt,twocolumn,twoside]{xse}
+% \usepackage{graphicx} % Required for inserting images
+% 
+
+\author{Philomina Lillie Normann}
+% \usepackage{upgreek}
+% 
+\newcommand{\pict}[1]{(\textit{#1}){}}
+% 
+\usepackage{tcolorbox}
+% 
+\usepackage{dirtree} % make simple directory tree
+\definecolor{pathcolor}{HTML}{BFB431} 
+% 
+% \usepackage{listings}
+% 
+% \usepackage{tikz}
+% custom - 
+\newcommand{\negsymb}[1]{%
+	\begin{tikzpicture}[#1]%
+		\draw [line width=0.23mm ] (0,0) -- (1.05ex,0ex);%
+		
+	\end{tikzpicture}%
+}
+% 
+% 
+\newcommand{\negM}[1]{ \texttt{#1}\raisebox{0.95ex}{\negsymb{}   }}
+\newcommand{\posM}[1]{ \texttt{#1}\raisebox{0.5ex}{\small+}   }
+	% 
+	%\newcommand{\negM}{\raisebox{0.95ex}{\negsymb{} }}
+	%\newcommand{\posM}{\raisebox{0.5ex}{+}}
+	% 
+	\newcommand{\us}{\rule[-.2ex]{1ex}{.4pt}} %create nice underscore by calling \blank{1ex}
+% 
+% 
+\makeatletter
+\@ifundefined{thepage}{\def\thepage{\arabic{page}}}{}%
+\makeatother
+% 
+\begin{document}
+% 
+\title{Evaluation of Cell-Segmentation Algorithms on Influenza infected Mouse-Spleen Cells}
+%
+\author[a,b]{Philomina Lillie Normann}
+\affil[a]{Humboldt-Universitaet zu Berlin}
+\affil[b]{Berlin Institute of Health (BIH) @ Charite}
+% 
+\leadauthor{Normann}
+% 
+\keywords{Python $|$ Cell Segmentation $|$ ...}
+% 
+\begin{abstract}
+    ...test
+\end{abstract}
+% 
+\dates{Edited by Normann; This manuscript was compiled on \today}
+% 
+\maketitle
+\thispagestyle{firststyle}
+\ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
+% 
+% 
+\input{Chapters/introduction}
+% 
+\input{Chapters/Evaluation}
+\end{document}
