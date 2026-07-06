@@ -1,6 +1,7 @@
 % 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{xse}[2026/07/06, v0.1]
+% 
 \AtEndOfClass{\RequirePackage[nopatch=eqnum]{microtype}}
 % 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
@@ -469,7 +470,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \newcommand{\articletype}[1]{\def\@articletype{\footnotesize\sffamily#1}}
 %% Custom title page
 \renewcommand{\@maketitle}{\vskip-8.5\p@%
-{ % \includegraphics[height=24.5pt,width=66.4pt]{PNAS_Logo.pdf}%
+{%\includegraphics[height=24.5pt,width=66.4pt]{PNAS_Logo.pdf}%
 % \put(28.9,9.05){\color{typecol}\sffamily\bfseries\footnotesize RESEARCH ARTICLE}\put(102,3.55){\color{gray80}{\rule{0.5pt}{16pt}}}\put(110,9.05){\@articletype}\par\vskip11\p@%
 \ifthenelse{\boolean{shortarticle}}
   {\ifthenelse{\boolean{singlecolumn}}{}{
@@ -483,7 +484,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
   {% else
     %
     \vskip10pt%
-    {\raggedright\baselineskip= 20pt\titlefont \@title\par}%
+    {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
     \vskip10pt% 21pts between base of title and base of author line
     {\raggedright \@author\par}
     \vskip8pt% 16pts between base of affiliations and base of dates line
@@ -499,6 +500,8 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 }%
 \vskip\pnas@vertadjust
 }
+% 
+\setboolean{shortarticle}{true}
 % 
 %% Footnotes set up
 \RequirePackage[flushmargin,ragged,symbol*]{footmisc}
