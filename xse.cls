@@ -326,20 +326,20 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 % Define an environment with abstract content and styling
 \newcommand{\abscontent}{
 \noindent
-\parbox{\dimexpr1.35\linewidth}{%
+\parbox{\dimexpr1\linewidth\relax}{%
     \vskip3pt%
-	\absfont \theabstract
+	\absfont \theabstract%
 }%
 \vskip10pt%
-\noindent
-\parbox{\dimexpr1.35\linewidth}{%
-{
+\noindent%
+\parbox{\dimexpr1\linewidth\relax}{%
+{%
  \keywordsfont \@ifundefined{@keywords}{}{\@keywords}}%
-}
+}%
 \vskip12pt%
-}
+}%
 % 
-\newcommand{\secondpage}{\@ifstar{\pnaspar}{\parabreak}}
+\newcommand{\secondpage}{\@ifstar{\pnaspar}{\parabreak}}%
 % 
 \newcommand{\Parasplit}{\parfillskip=0pt\eject\clearpage\setlength{\columnwidth}{\linewidth}\setlength{\columnwidth}{247pt}\setlength{\linewidth}{247pt}\setlength{\hsize}{247pt}\parfillskip=0pt plus 1fil\noindent}
 \newcommand{\Endparasplit}{\vfill\eject\clearpage\setlength{\columnwidth}{\linewidth}\setlength{\columnwidth}{247pt}\setlength{\linewidth}{247pt}\setlength{\hsize}{247pt}\parfillskip=0pt plus 1fil}
@@ -496,10 +496,10 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
     \vskip25pt%
   }%
 %%%
-\@additionalelement
+\@additionalelement%
 }%
-\vskip\pnas@vertadjust
-}
+\vskip\pnas@vertadjust%
+}%
 % 
 \setboolean{shortarticle}{true}
 % 

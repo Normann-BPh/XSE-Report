@@ -1,4 +1,8 @@
 \subsection*{Cellpose-SAM}
 Combines the Cellpose architecture with the foundational model SAM.
-Achives, according to their evaluation methods, superhuman generalization, breaking the interannotator bound.
+Achieves, according to their evaluation methods, superhuman generalization, breaking the interannotator bound.
 additionally to the SAM based model, Mouseland also provides one based on DINO
+The cellpose model uses a U-Net type NN , predicting vector flows, which equals the r a representation of the segmentation. categorie of CNN. using the gradient of heach vector a mask is produced a t pixel level. 
+SAM: model scale , dataset size, and total training compute improve response to 'propt prompt engineering' -> promptabl with masking at realtime lvl. 
+SAM-Model: image encoder -> image embedding + prompt encoder embeds prompts --> combine to lightweight mask decoder predicting segm asks 
+thus the impage embedding can be used separately from prompt encoder , i.e. different prompter can be used. see CPSAM
