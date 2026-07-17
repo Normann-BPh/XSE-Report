@@ -10,3 +10,5 @@ keeping the major part of the SAM (305M out of 312M parameters) they combine the
 the reworked some basics of the encoder: from highres image to smaller inputs with small pathces (1024->256,16->8) ; local attention in SAM back to default global attention as in ViT-L (does this not kinda work against the SAM approach? issn't the point the local attention?) "with almost no runtime penalty" | is that relevatn? | why did they do that?
 their focus apparently lies mostly on the SAM-Weights! since the training approach by SAM is unsupervised it can train on millions of input images with little to nto human labor. big data good !
 they train the pretained model on 22.826 images with \~ 3M ROIs. while continuing with Ceellpose3 mixing probabilites for down weighting homogenous datasets (what is this what does this maen?)
+
+from DINOCell paper: flow-based approach predicting pixel-wise vector fields that point towards the cell centres -> gradient tracking to reconstruct instances.
