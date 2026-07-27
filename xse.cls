@@ -567,3 +567,85 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \RequirePackage{stfloats}
 \RequirePackage{marginnote}
 % 
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colours
+%% ibm + green
+% ffb000
+% fe6100
+% dc267f
+% 785ef0
+% 648fff
+% ------
+% 79ab59
+% 
+%% pride by https://www.reddit.com/user/partywhale/
+%% see: https://www.reddit.com/r/vexillology/comments/v2luae/comment/iat30za/
+% d60303
+% ff790b
+% eaee03
+% 06d68b
+% 017eff
+% 6b0ecc
+% 
+\definecolor{cpsam}{HTML}{ffb000}
+\definecolor{dinocell}{HTML}{fe6100}
+\definecolor{dissect}{HTML}{dc267f}
+\definecolor{mesmer}{HTML}{785ef0}
+\definecolor{proseg}{HTML}{648fff}
+\definecolor{stardist}{HTML}{79ab59}
+% 
+% 
+\definecolor{green}{HTML}{92c767}
+\definecolor{mud}{HTML}{654249}
+% 
+\definecolor{blau}{HTML}{003754} 
+\definecolor{weiss}{HTML}{FFFFFF}
+\definecolor{hellrosa}{HTML}{FFB0AC}
+\definecolor{dunkelrot}{HTML}{AF1821}
+\definecolor{korall}{HTML}{EA5451}
+\definecolor{gold}{HTML}{9D7220}
+\definecolor{mineral}{HTML}{009AA9}
+\definecolor{lavendel}{HTML}{7876B6}
+% 
+\colorlet{blau70}{blau!70}
+\colorlet{blau50}{blau!50}
+% 
+% 
+\RequirePackage{listings}
+\lstset{ 
+	backgroundcolor=\color{weiss},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+	basicstyle=\scriptsize\ttfamily,        % the size of the fonts that are used for the code \footnotesize
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespacec
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	commentstyle=\color{hellrosa},    % comment style
+	deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	firstnumber=0,                % start line enumeration with line 1000
+	frame=single,	                  % adds a frame around the code
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{dunkelrot},       % keyword style
+	language=Python,                 % the language of the code
+	morekeywords={*,...},            % if you want to add more keywords to the set
+	numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=5pt,                   % how far the line-numbers are from the code
+	numberstyle=\tiny\color{blau50}, % the style that is used for the line-numbers
+	rulecolor=\color{blau},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	stringstyle=\color{blau70},     % string literal style
+	tabsize=2,	                   % sets default tabsize to 2 spaces
+	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+% 
+% 
+\RequirePackage{dirtree}
+\renewcommand*\DTstyle{\ttfamily\textcolor{blau}}
+\renewcommand*\DTstylecomment{\rmfamily\color{blau50}\textsc}
+\DTsetlength{0.1em}{1em}{0.1em}{0.4pt}{0.4pt}

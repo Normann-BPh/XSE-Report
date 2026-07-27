@@ -24,23 +24,37 @@ stuff :)
     \caption{CS-Benchmark's Dice method.}
     \label{fig:cs_dice}
 \end{figure}
-
-\subsection{PCA}
+% 
+\subsection*{Reference Based}
+we make mask. mask bad. but o well.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/TMA2_13-3_whole-cell_labels-1.jpg}
+    \caption{Segmentation mask used for eval.}
+    \label{fig:Mask}
+\end{figure}
+% 
+% 
+\subsection*{Reference Free}
+Since computer vision can theoretically and practically often does outperform human-con--- human segmentation and in somecases human-consensus (cellpose) - meaning using references is bound to stop working soon.. methods evaluationg based on statistics extracted form the image to segment or by finding a groundtruth determined by the highest probability of a mix of segmentation results. see overnext section.
+\subsubsection*{CellSegmentationEvaluator}
 On homogeneity of cell types (KMeans):
 cell types should be roughly similar in composition across all channels
 cell types can be approximated by cell clusters
 the average CV across all clusters for a given number of clusters is a proxy for similarity in composition within cell types
 averaging the average CV across all clusters across different numbers of the cluster is also a proxy for similarity in composition within cell types
-
+% 
 s. Cell types were defined using KMeans clustering performed on the mean cell intensities across all channels after applying z-score standardization for each channel
 K, number of cell types, varied from 1 to 10
-
+% 
 On homogeneity of cell types (PCA):
 and (b) as before
 (c)  the fraction of variance accounted for by the first principal component 
 of the cells in each cluster is a proxy for similarity in composition of each cell type
 (d)  averaging this fraction over different numbers of clusters is also a proxy for similarity of each cell type
-
+% 
 An important consideration to note is that our metrics are based in large part on the assumption that tissue images used for evaluation contain different cell types that vary in their expression of different markers. If a tissue image is largely uniform, then our measures of segmented cell homogeneity will yield similar results regardless of the accuracy of cell segmentation masks. The greater the number of channels measured and the larger the differences between cell types, the more discriminating our metrics will be.
-
+% 
 The metrics also do not make any assumptions about allowable cell shapes. Measuring cell shape is an inherent problem for 2D tissue images where 3D cells are only seen in a thin layer in the z-axis. Cells belonging to the same cell type might be captured at different angles or heights and therefore display different shapes. Although our metrics of homogeneity at the cell level solve this issue indirectly (since cells from the same cell type but at different views should have similar channel compositions), segmentation methods that produce cells and nuclei with unexpected shapes are not directly penalized.
+\subsubsection*{PB}
+% big MAYBE

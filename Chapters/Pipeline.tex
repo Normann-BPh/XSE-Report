@@ -6,3 +6,55 @@ bla - bla-bla
     \caption{Regions marked automatically by the pipeline if no section is given.}
     \label{fig:mROIs}
 \end{figure}
+% 
+rsatoin
+% 
+\vspace{8pt}
+\begin{figure}
+    \label{fig:directory structure}
+    \dirtree{%
+        .1 \textless smaple name\textgreater.
+        .2 processed.
+        .3 \textless section\textgreater.
+        .4 boundaries.
+        .5 cell\us relative.parquet.
+        .5 nucleus\us relative.parquet.
+        .4 morphology.
+        .5 focus.
+        .6 focus.ome.tif.
+        .6 quartered.
+        .7 q0\%c.ome.tif.
+        .5 multi\us layer.
+        .6 morphology.ome.tif.
+        .6 quartered.
+        .7 q0\%c.ome.tif.
+        .5 single\us layer.
+        .6 layer0\%L.
+        .7 morphology.tif.
+        .7 quatered.
+        .8 q0\%c.tif.
+        .4 transcripts.
+        .5 relative.csv.gz.
+        .5 relative.parquet.
+        .3 marked\us regions-of-interest.tif.
+        .3 sections\us px.json.
+        .2 results.
+        .3 \textless method\textgreater.
+        .4 evaluation.
+        .5 \textless section\textgreater.
+        .6 layer.
+        .7 CS-BENCH.csv.
+        .7 false\us negatives.csv.
+        .7 results.csv.
+        .7 split\us merges.csv.
+        .4 output.
+        .5 \textless section\textgreater.
+        .6 \textless ...\textgreater.
+        .2 run.
+        .3 jobs.
+        .4 \textless method\textgreater.sh.
+        .3 logs.
+        .4 \textless method\textgreater\us \%N\us \%j.err.
+        .4 \textless method\textgreater\us \%N\us \%j.out.
+    }
+\end{figure}
