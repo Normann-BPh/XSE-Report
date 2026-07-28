@@ -6,3 +6,20 @@ pre-trained
 ------------------------
 takes the transcriptomics data into account. one of the few algorithms do combine both. thus more method specific, but since this is a report on a Xenium based project that is not too relevant.
 BIG PROBLEM: NO PAPER
+------------------------
+Detecron2: can somebodya please explain Detectron2 to me :(
+---
+Swin: vision transformer - is it even used? i can't find any reference to the file....
+---
+Mask R-CNN: 
+--------------------------
+DISSECT def in detector.py: calculations for diffusion q(xt | xt-1) and others. calculations for posterior q(xt-1 | xt. x0). above: equal to 1. / (1. / (1. - alpha\us cumprod\us tm1) + alpha\us t / beta\us t). below: below: log calculation clipped because the posterior variance is 0 at the beginning of the diffusion chain. 
+Loss parameters:
+class\us weight = cfg.MODEL.DISSECT.CLASS\us WEIGHT \\
+giou\us weight = cfg.MODEL.DISSECT.GIOU\us WEIGHT \\
+l1\us weight = cfg.MODEL.DISSECT.L1\us WEIGHT \\ 
+no\us object\us weight = \\ cfg.MODEL.DISSECT.NO\us OBJECT\us WEIGHT \\
+self.deep\us supervision = \\ cfg.MODEL.DISSECT.DEEP\us SUPERVISION \\
+self.use\us focal = cfg.MODEL.DISSECT.USE\us FOCAL \\
+self.use\us fed\us loss = cfg.MODEL.DISSECT.USE\us FED\us LOSS \\
+self.use\us nms = cfg.MODEL.DISSECT.USE\us NMS \\
