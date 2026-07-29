@@ -46,14 +46,65 @@
 \newcommand{\keywordsfont}{\normalfont\sffamily\fontsize{7}{9}\selectfont}
 \newcommand{\copyrightfont}{\normalfont\rmfamily\fontsize{6}{8}\selectfont}
 % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colours
+%% ibm + green
+% ffb000
+% fe6100
+% dc267f
+% 785ef0
+% 648fff
+% ------
+% 79ab59
+% 
+%% pride by https://www.reddit.com/user/partywhale/
+%% see: https://www.reddit.com/r/vexillology/comments/v2luae/comment/iat30za/
+% d60303
+% ff790b
+% eaee03
+% 06d68b
+% 017eff
+% 6b0ecc
+% 
+\definecolor{cpsam}{HTML}{FFB000}
+\definecolor{dinocell}{HTML}{FE6100}
+\definecolor{dissect}{HTML}{DC267F}
+\definecolor{mesmer}{HTML}{785EF0}
+\definecolor{proseg}{HTML}{648FFF}
+\definecolor{stardist}{HTML}{79AB59}
+% 
+% 
+\definecolor{green}{HTML}{92C767}
+\definecolor{mud}{HTML}{654249}
+% 
+\definecolor{blau}{HTML}{003754} 
+\definecolor{weiss}{HTML}{FFFFFF}
+\definecolor{schwarz}{HTML}{000000}
+\definecolor{hellrosa}{HTML}{FFB0AC}
+\definecolor{dunkelrot}{HTML}{AF1821}
+\definecolor{korall}{HTML}{EA5451}
+\definecolor{gold}{HTML}{9D7220}
+\definecolor{mineral}{HTML}{009AA9}
+\definecolor{lavendel}{HTML}{7876B6}
+% 
+\colorlet{lavendel80}{lavendel!80}
+\colorlet{blau70}{blau!70}
+\colorlet{blau50}{blau!50}
+% 
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Set URL link color & font
-\renewcommand\UrlFont{\color{black}\sffamily}
+\renewcommand\UrlFont{\color{schwarz}\sffamily}
 % 
 %% Author and affiliation
 \RequirePackage{authblk}
 \setlength{\affilsep}{8.5pt} % 16.5pts between base of author line and base of affil line
-\renewcommand\Authfont{\color{color0}\sffamily\fontsize{6}{7.5}\selectfont}
-\renewcommand\Affilfont{\color{color0}\sffamily\fontsize{6}{7.5}\selectfont}
+\renewcommand\Authfont{\color{schwarz}\sffamily\fontsize{6}{7.5}\selectfont}
+\renewcommand\Affilfont{\color{schwarz}\sffamily\fontsize{6}{7.5}\selectfont}
 % 
 \renewcommand\AB@affilsepx{; \protect\Affilfont}
 % 
@@ -398,6 +449,127 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 % 
 \RequirePackage{cuted}
 % 
+% 
+\newcommand\bibsplit[1][]{\begin{strip}\vspace*{-12pt}\end{strip}\setcounter{BalanceAtReference}{#1}}
+% 
+%% Manual adjustment to line up main content with line numbers
+\newlength\pnas@vertadjust
+\newcommand\verticaladjustment[1]{\setlength{\pnas@vertadjust}{#1}}
+% 
+\definecolor{typecol}{cmyk}{0,.67,.9,.0}%
+\definecolor{gray80}{gray}{0.75}
+% 
+\setboolean{shortarticle}{true}
+%
+% 
+\newsavebox{\authfootinfo}
+\additionalelement{} % Don't use the \additionalelement field (set blank)
+% Author affiliation as footnote
+% Patch the \@author from authblk -- shouldn't display affiliation here
+\patchcmd{\@author}{\\[\affilsep]\AB@affillist}{}{}{}
+% 
+\appto{\maketitle}{%
+  \afterpage{\savebox{\authfootinfo}{%
+    \begin{minipage}{\columnwidth}
+    \footnotesize
+    \if!\AB@affillist!\else Author affiliations: \AB@affillist\par\vskip6pt\fi
+    \vskip4pt\hrule\vskip12pt
+    \@ifundefined{@authorcontributions}{\vskip-3pt}{\@authorcontributions}
+\vskip3pt%
+\@ifundefined{@authordeclaration}{\vskip-3pt}{\@authordeclaration}
+\vskip3pt%
+\@ifundefined{@equalauthors}{\vskip-3pt}{\@equalauthors}
+\vskip3pt%
+\@ifundefined{@correspondingauthor}{\vskip-3pt}{\@correspondingauthor}\par
+    \end{minipage}%
+  }
+  \newlength\authfootheight
+  \settoheight{\authfootheight}{\usebox{\authfootinfo}}
+  \addtolength{\authfootheight}{\baselineskip}
+  \begin{authfoot}
+  \usebox{\authfootinfo}
+  \end{authfoot}
+}}
+% 
+% Author information in a box at the bottom as two floats.
+\RequirePackage{float}
+\floatstyle{plain}
+\newfloat{authfoot}{b!}{auf}
+% 
+%% Set sans as default font
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\keywordsfont}{\fontsize{7}{9}\selectfont\sffamily}
+\renewcommand\Authfont{\sffamily\bfseries\fontsize{6}{7.5}\selectfont}
+\renewcommand\Affilfont{\color{color0}\sffamily\fontsize{6}{7.5}\selectfont}
+% 
+% 
+% 
+\newcommand{\articletype}[1]{\def\@articletype{\footnotesize\sffamily#1}}
+%% Custom title page
+\renewcommand{\@maketitle}{\vskip-8.5\p@%
+{\includegraphics[height=24.5pt,width=66.4pt]{Images/T-cell-checkpoints-in-infection-pathologies_v3-04-1024x516.png}%
+ \put(28.9,9.05){\color{lavendel}\sffamily\bfseries\footnotesize STUDY REPORT}\put(95,3.55){\color{lavendel80}{\rule{0.5pt}{16pt}}}\put(105,9.05){\color{lavendel}\sffamily\bfseries\footnotesize XenSegEval}\par\vskip11\p@%
+\ifthenelse{\boolean{shortarticle}}
+  {\ifthenelse{\boolean{singlecolumn}}{}{
+    {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
+    \vskip10pt% 21pts between base of title and base of author line
+    {\raggedright \@author\par}
+    \vskip8pt% 16pts between base of affiliations and base of dates line
+    {\raggedright \datesfont \@ifundefined{@dates}{}{\@dates}\par}
+    \vskip12pt%
+    }}
+  {% else
+    %
+    \vskip10pt%
+    {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
+    \vskip10pt% 21pts between base of title and base of author line
+    {\raggedright \@author\par}
+    \vskip8pt% 16pts between base of affiliations and base of dates line
+    {\raggedright \datesfont \@ifundefined{@dates}{}{\@dates}\par}
+    \vskip12pt
+    {%
+    \abscontent
+    }%
+    \vskip25pt%
+  }%
+%%%
+\@additionalelement
+}%
+\vskip\pnas@vertadjust
+}
+% 
+\renewenvironment{thebibliography}[1]{%
+\strip\bibsection
+ \parindent\z@
+ \labelsep2.8pt
+ \bibpreamble
+\fontsize{6.75pt}{8pt}\selectfont
+ \list{\@biblabel{\the\c@NAT@ctr}}{\@bibsetup{#1}\global\c@NAT@ctr\z@}%
+ \ifNAT@openbib
+   \renewcommand\newblock{\par}%
+ \else
+   \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
+ \fi
+ \sloppy
+ \clubpenalty4000\widowpenalty4000
+ \sfcode`\.\@m
+ \let\NAT@bibitem@first@sw\@firstoftwo
+    \let\citeN\cite \let\shortcite\cite
+    %\let\citeasnoun\cite\xbibfont
+	%\begin{minipage}[h!]{2\textwidth}
+\bibfont\raggedright
+	
+}{%\end{minipage}%
+ \bibitem@fin
+ \bibpostamble
+ \def\@noitemerr{%
+  \PackageWarning{natbib}{Empty `thebibliography' environment}%
+ }%
+ \endlist
+ \bibcleanup
+ \label{LastPage}
+\endstrip}%
+
 \def\@outputdblcol{%
     \if@firstcolumn
         \global\@firstcolumnfalse
@@ -455,53 +627,20 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
             \fi
         \endgroup
     \fi
-}
+    }
+% 
 \AtEndDocument{\hbox{}}
 % 
-\newcommand\bibsplit[1][]{\begin{strip}\vspace*{-12pt}\end{strip}\setcounter{BalanceAtReference}{#1}}
+\renewcommand\normalsize{%
+   \@setfontsize\normalsize{9pt}{11.5pt}%
+   \abovedisplayskip 8\p@ \@plus4\p@ \@minus4\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 5\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
 % 
-%% Manual adjustment to line up main content with line numbers
-\newlength\pnas@vertadjust
-\newcommand\verticaladjustment[1]{\setlength{\pnas@vertadjust}{#1}}
-% 
-\definecolor{typecol}{cmyk}{0,.67,.9,.0}%
-\definecolor{gray80}{gray}{0.75}
-% 
-\newcommand{\articletype}[1]{\def\@articletype{\footnotesize\sffamily#1}}
-%% Custom title page
-\renewcommand{\@maketitle}{\vskip-8.5\p@%
-{%\includegraphics[height=24.5pt,width=66.4pt]{PNAS_Logo.pdf}%
-% \put(28.9,9.05){\color{typecol}\sffamily\bfseries\footnotesize RESEARCH ARTICLE}\put(102,3.55){\color{gray80}{\rule{0.5pt}{16pt}}}\put(110,9.05){\@articletype}\par\vskip11\p@%
-\ifthenelse{\boolean{shortarticle}}
-  {\ifthenelse{\boolean{singlecolumn}}{}{
-    {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
-    \vskip10pt% 21pts between base of title and base of author line
-    {\raggedright \@author\par}
-    \vskip8pt% 16pts between base of affiliations and base of dates line
-    {\raggedright \datesfont \@ifundefined{@dates}{}{\@dates}\par}
-    \vskip12pt%
-    }}
-  {% else
-    %
-    \vskip10pt%
-    {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
-    \vskip10pt% 21pts between base of title and base of author line
-    {\raggedright \@author\par}
-    \vskip8pt% 16pts between base of affiliations and base of dates line
-    {\raggedright \datesfont \@ifundefined{@dates}{}{\@dates}\par}
-    \vskip12pt
-    {%
-    \abscontent
-    }%
-    \vskip25pt%
-  }%
-%%%
-\@additionalelement%
-}%
-\vskip\pnas@vertadjust%
-}%
-% 
-\setboolean{shortarticle}{true}
+\renewcommand{\absfont}{\normalfont\bfseries\fontsize{8}{10}\selectfont}
+%
 % 
 %% Footnotes set up
 \RequirePackage[flushmargin,ragged,symbol*]{footmisc}
@@ -567,53 +706,9 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \RequirePackage{stfloats}
 \RequirePackage{marginnote}
 % 
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% colours
-%% ibm + green
-% ffb000
-% fe6100
-% dc267f
-% 785ef0
-% 648fff
-% ------
-% 79ab59
-% 
-%% pride by https://www.reddit.com/user/partywhale/
-%% see: https://www.reddit.com/r/vexillology/comments/v2luae/comment/iat30za/
-% d60303
-% ff790b
-% eaee03
-% 06d68b
-% 017eff
-% 6b0ecc
-% 
-\definecolor{cpsam}{HTML}{ffb000}
-\definecolor{dinocell}{HTML}{fe6100}
-\definecolor{dissect}{HTML}{dc267f}
-\definecolor{mesmer}{HTML}{785ef0}
-\definecolor{proseg}{HTML}{648fff}
-\definecolor{stardist}{HTML}{79ab59}
-% 
-% 
-\definecolor{green}{HTML}{92c767}
-\definecolor{mud}{HTML}{654249}
-% 
-\definecolor{blau}{HTML}{003754} 
-\definecolor{weiss}{HTML}{FFFFFF}
-\definecolor{hellrosa}{HTML}{FFB0AC}
-\definecolor{dunkelrot}{HTML}{AF1821}
-\definecolor{korall}{HTML}{EA5451}
-\definecolor{gold}{HTML}{9D7220}
-\definecolor{mineral}{HTML}{009AA9}
-\definecolor{lavendel}{HTML}{7876B6}
-% 
-\colorlet{blau70}{blau!70}
-\colorlet{blau50}{blau!50}
-% 
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \RequirePackage{listings}
 \lstset{ 
 	backgroundcolor=\color{weiss},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
@@ -649,3 +744,6 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \renewcommand*\DTstyle{\ttfamily\textcolor{blau}}
 \renewcommand*\DTstylecomment{\rmfamily\color{blau50}\textsc}
 \DTsetlength{0.1em}{1em}{0.1em}{0.4pt}{0.4pt}
+%
+% ------------------------------------------------------------------------
+\endinput
