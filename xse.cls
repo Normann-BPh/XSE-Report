@@ -49,6 +49,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{weiss}{HTML}{FFFFFF}
+\definecolor{schwarz}{HTML}{000000}
 % colours
 %% ibm + green
 % ffb000
@@ -75,13 +77,25 @@
 \definecolor{proseg}{HTML}{648FFF}
 \definecolor{stardist}{HTML}{79AB59}
 % 
+\definecolor{life}{HTML}{D60303}
+\definecolor{healing}{HTML}{FF790B}
+\definecolor{sunlight}{HTML}{EAEE03}
+\definecolor{nature}{HTML}{06D68B}
+\definecolor{harmony}{HTML}{017EFF}
+\definecolor{spirit}{HTML}{6B0ECC}
+% 
+\colorlet{spirit50g}{spirit!70!schwarz}
+\colorlet{harmony50g}{harmony!70!schwarz}
+\colorlet{nature50g}{nature!70!schwarz}
+\colorlet{sunlight50g}{sunlight!70!schwarz}
+\colorlet{healing50g}{healing!70!schwarz}
+\colorlet{life50g}{life!70!schwarz}
+% 
 % 
 \definecolor{green}{HTML}{92C767}
 \definecolor{mud}{HTML}{654249}
 % 
 \definecolor{blau}{HTML}{003754} 
-\definecolor{weiss}{HTML}{FFFFFF}
-\definecolor{schwarz}{HTML}{000000}
 \definecolor{hellrosa}{HTML}{FFB0AC}
 \definecolor{dunkelrot}{HTML}{AF1821}
 \definecolor{korall}{HTML}{EA5451}
@@ -92,6 +106,7 @@
 \colorlet{lavendel80}{lavendel!80}
 \colorlet{blau70}{blau!70}
 \colorlet{blau50}{blau!50}
+\colorlet{schwarz50}{schwarz!50}
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -710,39 +725,102 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 \RequirePackage{listings}
-\lstset{ 
+\lstdefinestyle{custompy}{ 
 	backgroundcolor=\color{weiss},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
 	basicstyle=\scriptsize\ttfamily,        % the size of the fonts that are used for the code \footnotesize
 	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespacec
 	breaklines=true,                 % sets automatic line breaking
 	captionpos=b,                    % sets the caption-position to bottom
-	commentstyle=\color{hellrosa},    % comment style
-	deletekeywords={...},            % if you want to delete keywords from the given language
+	commentstyle=\color{harmony50g},    % comment style
+	deletekeywords={},            % if you want to delete keywords from the given language
 	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
 	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
 	firstnumber=0,                % start line enumeration with line 1000
 	frame=single,	                  % adds a frame around the code
 	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-	keywordstyle=\color{dunkelrot},       % keyword style
+	keywordstyle=\color{life},       % keyword style
 	language=Python,                 % the language of the code
 	morekeywords={*,...},            % if you want to add more keywords to the set
 	numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
 	numbersep=5pt,                   % how far the line-numbers are from the code
 	numberstyle=\tiny\color{blau50}, % the style that is used for the line-numbers
-	rulecolor=\color{blau},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	rulecolor=\color{schwarz},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
 	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
 	showstringspaces=false,          % underline spaces within strings only
 	showtabs=false,                  % show tabs within strings adding particular underscores
 	stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
-	stringstyle=\color{blau70},     % string literal style
+	stringstyle=\color{nature50g},     % string literal style
 	tabsize=2,	                   % sets default tabsize to 2 spaces
-	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+	title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 % 
+\lstdefinelanguage{Ini}{%
+    basicstyle=\ttfamily\scriptsize,
+    columns=fullflexible,
+    morecomment=[s][\color{spirit50g}\bfseries]{[}{]},
+    morecomment=[l]{\#},
+    morecomment=[l]{;},
+    commentstyle=\color{nature50g}\ttfamily,
+    morekeywords={},
+    otherkeywords={=},
+    keywordstyle={\color{life}\bfseries},
+}
+\lstdefinestyle{customIni}{%
+    backgroundcolor=\color{weiss},
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	escapeinside={\%*}{*)},
+	extendedchars=true,
+	firstnumber=0,
+	frame=single,
+	keepspaces=true,
+	morekeywords={*,...},
+	numbers=none, 
+	numbersep=5pt,
+	numberstyle=\tiny\color{blau50},
+	rulecolor=\color{schwarz},
+	showspaces=false, 
+	showstringspaces=false,
+	showtabs=false, 
+	stepnumber=2,
+	tabsize=2,	
+	title=\lstname,
+    language=Ini,
+    stringstyle={\color{harmony}},
+    morestring=[d][\color{harmony50g}]{'},
+}
+% 
+\lstdefinestyle{custombash}{%
+    basicstyle=\scriptsize\ttfamily,
+    backgroundcolor=\color{weiss},
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	escapeinside={\%*}{*)},
+	extendedchars=true,
+	firstnumber=0,
+	frame=single,
+	keepspaces=true,
+	morekeywords={*,...},
+	numbers=none, 
+	numbersep=5pt,
+	numberstyle=\tiny\color{blau50},
+	rulecolor=\color{schwarz},
+	showspaces=false, 
+	showstringspaces=false,
+	showtabs=false, 
+	stepnumber=2,
+	tabsize=2,	
+	title=\lstname,
+    language=bash,
+    stringstyle={\color{harmony}},
+    morestring=[d][\color{harmony50g}]{'},
+}
 % 
 \RequirePackage{dirtree}
-\renewcommand*\DTstyle{\ttfamily\textcolor{blau}}
-\renewcommand*\DTstylecomment{\rmfamily\color{blau50}\textsc}
+\renewcommand*\DTstyle{\ttfamily\textcolor{schwarz}}
+\renewcommand*\DTstylecomment{\rmfamily\color{schwarz50}\textsc}
 \DTsetlength{0.1em}{1em}{0.1em}{0.4pt}{0.4pt}
 %
 % ------------------------------------------------------------------------
