@@ -738,7 +738,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 	firstnumber=0,                % start line enumeration with line 1000
 	frame=single,	                  % adds a frame around the code
 	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-	keywordstyle=\color{life},       % keyword style
+	keywordstyle=\color{lifeD},       % keyword style
 	language=Python,                 % the language of the code
 	morekeywords={*,...},            % if you want to add more keywords to the set
 	numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
@@ -763,7 +763,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
     commentstyle=\color{natureD}\ttfamily,
     morekeywords={},
     otherkeywords={=},
-    keywordstyle={\color{life}\bfseries},
+    keywordstyle={\color{life!75}\bfseries},
 }
 \lstdefinestyle{customIni}{%
     backgroundcolor=\color{weiss},
