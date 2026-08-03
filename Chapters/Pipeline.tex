@@ -1,11 +1,11 @@
 \section*{Pipeline}
-All configurations are done in the config.toml file. It begins with
+All configurations are done in the \inlinepath{config.toml} file. It begins with
 %
 \begin{lstlisting}[caption=config, style=customIni]
 # TOML for XenSegEval
 [owner]
-name = 'Normann-BPh'
-mail = 'philomina-lillie.normann@bih-charite.de'
+name = "Normann-BPh"
+mail = "philomina-lillie.normann@bih-charite.de"
 
 [tasks]
 preprocess = false
@@ -14,26 +14,26 @@ evaluate = false
 \end{lstlisting}
 
 % \lstinputlisting{config.toml}
-the owner variable is not relevant for the pipeline. 'mail' is used to send SLURM updates from the HPC. if the pipeline is run as is, then it requires a SLURM server. information on start, fail, end and time limits are sent to the mail. \\
-The subprocesses of preprocessing the images, segmenting on them and then evaluating with a given section are only started if their respective value is set to 'true'. \\
+the owner variable is not relevant for the pipeline. \inlinecode{mail} is used to send SLURM updates from the HPC. if the pipeline is run as is, then it requires a SLURM server. information on start, fail, end and time limits are sent to the mail. \\
+The subprocesses of preprocessing the images, segmenting on them and then evaluating with a given section are only started if their respective value is set to \inlinecode{true}. \\
 Finding the data, providing an output directory and evaluation require certain paths. all necessary paths are given below and can be found in the default config file.
 \begin{lstlisting}[caption=config, style=customIni]
 [paths]
 # directory the processed data will be saved to
 # as default this will be the cloned directory
-home = 'drive/group/user/home/'
+home = "drive/group/user/home/"
 # directory of Xenium-results
-data_path = '(home)/xenium_output/'
+data_path = "(home)/xenium_output/"
 # give a name to the sample
-sample_name = 'TMA[X]'
+sample_name = "TMA[X]"
 # path to ground_truth
-gt_path = 'home/ground_truth.tif'
+gt_path = "home/ground_truth.tif"
 # path to the user-defined section
 # one must have the same coordinates
 # as the gt-masks
-sections_path = 'home/section.json'
+sections_path = "home/section.json"
 \end{lstlisting}
-all paths above are required to be defined before starting the pipeline. 'home' defines the directory where the output - images \& transcripts, segments, evaluation, logs - will be saved and where the ground-truth as well as the file to it's coordinates are located. 'data\us path' is the directory containing the Xenium output as defined above. 'sample\us name' the name to give the sample run, example: TMA1 for tissue microarray 1. 'gt\us path' the path to the groundtruth masks. required if evaluation based on Jaccard and co is used. 'sections\us path' the path to a json file of the section to evaluate on. required if running any evaluation. the provided ground truth must be of the same dimensions as the sections\us path. \\
+all paths above are required to be defined before starting the pipeline. \inlinecode{home} defines the directory where the output - images \& transcripts, segments, evaluation, logs - will be saved and where the ground-truth as well as the file to it's coordinates are located. \inlinecode{data\us path} is the directory containing the Xenium output as defined above. \inlinecode{sample\us name} the name to give the sample run, example: TMA1 for tissue microarray 1. \inlinecode{gt\us path} the path to the groundtruth masks. required if evaluation based on Jaccard and co is used. \inlinecode{sections\us path} the path to a json file of the section to evaluate on. required if running any evaluation. the provided ground truth must be of the same dimensions as the \inlinecode{sections\us path}. \\
 the Image has stats that are better provided, or verified, before the pipeline.
 \begin{lstlisting}[caption=config, style=customIni]
 [ImageStats]
@@ -46,11 +46,11 @@ y = 64612
 x = 51096
 \end{lstlisting}
 width and height of the image | the variables x and y | mustn't be provided. pixelsizes should be checked before and corrected if necessary.\\
-All tasks are send to the HPC if the pipeline is run. the parameters below configure for the SLURM nodes. using the function \textit{XenSegEval.utils.submit\us sbatch} the parameteres are collected and written into a job file in \textit{'(home)/\textless sample\us name\textgreater/run/jobs/\textless method\textgreater.sh'}
+All tasks are send to the HPC if the pipeline is run. the parameters below configure for the SLURM nodes. using the function \inlineprogram{XenSegEval.utils.submit\us sbatch} the parameteres are collected and written into a job file in \inlinepath{(home)/(sample\us name)/run/jobs/\textless method\textgreater.sh}
 \begin{lstlisting}[caption=config, style=customIni]
 [sbatch]
 # sbatch job specifications
-gpu = 'gpu:l40:1'
+gpu = "gpu:l40:1"
 # time in days
 time = 2
 # RAM in gigabyte
@@ -59,7 +59,7 @@ mem = 64
 cpu = 20
 \end{lstlisting}
 all, except ProSeg, require a gpu to work efficiently and to provide results comparable to those presented here. the variable must be exactly as the server requires the definition. for the BIH HPC cluster it's defined as above, gpu:abbreviation:amount. the pipeline runs on a 1.2K x 1.7K image for roughly an hour and a half, for safety each node is started with a 2day time limit. some processes, especially ProSeg and image preprocessing, need high RAM. many processes are parallelized using pythons multiprocessing, right amounts of cores can speedup the processes. currently the most cores are required by the cross evaluation, one core for each output = 15 cores.\\
-Below an example bash file for the evaluation of {\color{dinocell}dinocell} which is then send to an HPC node and executed. 
+Below an example bash file for the evaluation of {\color{dinocell}\textsc{DINOCell}} which is then send to an HPC node and executed. 
 \begin{lstlisting}[style=custombash]
 #!/bin/bash
 #
@@ -99,14 +99,14 @@ chunks = 4
 # overlap of chunks in percent
 overlap = 0.05
 \end{lstlisting}
-the preprocessing prepares three datasets. the images, which are morphology and focus split into the detected (n\us roi tells the pipeline how many regions of interes, how many punches, are expected), or provided, punches, each sample in a separate folder, morphology additionally separated into chunks and layers (the layers in all images are defined by the 'planes' variable). the transcipts also split into separate files, each containing the measured transcripts in the punch region, converted into pixel coordinates, relative to the sections origin. the same is done to the xenium provided boundaries of cells and nuclei. \\
-'buffer' adds few more pixels around the preliminary defined section. if the sections are expected to be very large, or have a lot of layers important for the segmentation, then the user can provide a number of chunks to split the images into. must be an integer square-root. the overlap between the chunks is defined by 'overlap' on percentage. \\
+the preprocessing prepares three datasets. the images, morphology and focus, split into the detected (\inlinecode{n\us roi} tells the pipeline how many regions of interes, how many punches, are expected), or provided, punche(s), each sample in a separate folder, morphology additionally separated into chunks and layers (the layers in all images are defined by the \inlinecode{planes} variable). the transcipts also split into separate files, each containing the measured transcripts in the punch region, converted into pixel coordinates, relative to the sections origin. the same is done to the xenium provided boundaries of cells and nuclei. \\
+\inlinecode{buffer} adds few more pixels around the preliminary defined section. if the sections are expected to be very large, or have a lot of layers important for the segmentation, then the user can provide a number of chunks to split the images into. must be an integer square-root. the overlap between the chunks is defined by \inlinecode{overlap} on percentage. \\
 \subsubsection*{Segmentation}
-The parameters of the segmentation are configured for each algorithm individually. to adjust which algorithms are run, exclude their parameters and the table name \textit{[methods.\textless method\textgreater]}. \\
+The parameters of the segmentation are configured for each algorithm individually. to adjust which algorithms are run, exclude their parameters and the table name \inlinecode{[methods.\textless method\textgreater]}. \\
 what follows then are the model specific parameters. please consult the documentation of the repsective model. a good start is the model or wrapper definition, they are provided in the default config file at the begining of each parameter-table.\\
 
 \subsubsection*{Evaluation}
-to configure the evaluation, modify the variables under '[evaluation]'
+to configure the evaluation, modify the variables under \inlinecode{[evaluation]}
 \begin{lstlisting}[caption=config, style=customIni]
 [evaluation]
 # if a evaluation should be performed based on
@@ -130,11 +130,11 @@ use = false
 
 [evaluation.cross]
 use = false
-# 'cs' or 'af1'
-benchmark = 'af1'
+# "cs" or "af1"
+benchmark = "af1"
 # choose metric according to benchmark
-metric = 'Jaccard'
-# relevant for 'af1'
+metric = "Jaccard"
+# relevant for "af1"
 threshold = 0.5
 \end{lstlisting}
 %
