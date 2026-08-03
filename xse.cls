@@ -84,12 +84,12 @@
 \definecolor{harmony}{HTML}{017EFF}
 \definecolor{spirit}{HTML}{6B0ECC}
 % 
-\colorlet{spirit50g}{spirit!70!schwarz}
-\colorlet{harmony50g}{harmony!70!schwarz}
-\colorlet{nature50g}{nature!70!schwarz}
-\colorlet{sunlight50g}{sunlight!70!schwarz}
-\colorlet{healing50g}{healing!70!schwarz}
-\colorlet{life50g}{life!70!schwarz}
+\colorlet{spiritD}{spirit!40!schwarz}
+\colorlet{harmonyD}{harmony!40!schwarz}
+\colorlet{natureD}{nature!40!schwarz}
+\colorlet{sunlightD}{sunlight!40!schwarz}
+\colorlet{healingD}{healing!40!schwarz}
+\colorlet{lifeD}{life!40!schwarz}
 % 
 % 
 \definecolor{green}{HTML}{92C767}
@@ -301,7 +301,7 @@
 \pagestyle{fancy}          % Enables the custom headers/footers
 % 
 \fancypagestyle{firststyle}{
-   \fancyfoot[L]{\footerfont \textbf{AG Sawitzki}\hspace{7pt}\today\hspace{7pt}LaTex v2025\hspace{7pt}Report}
+   \fancyfoot[L]{\footerfont \color{korall}\textbf{AG Sawitzki}\hspace{7pt}\today\hspace{7pt}LaTex v2025\hspace{7pt}Report}
    \fancyfoot[R]{\footerfont\@ifundefined{@doi}{}{\@doi}\hspace{7pt}\textbf{\thepage of \pageref*{LastPage}}}
 }
 % 
@@ -312,8 +312,8 @@
 \fancyfoot[LE]{\footerfont\textbf{\thepage} \textbf{of} \textbf{\pageref*{LastPage}}\hspace{7pt}\@ifundefined{@doi}{}{\@doi}}
 \fancyfoot[RO]{\footerfont\@ifundefined{@doi}{}{\@doi}\hspace{7pt}\textbf{\thepage} \textbf{of} \textbf{\pageref*{LastPage}}}
 %\fancyfoot[RE,LO]{\footerfont\@ifundefined{@leadauthor}{}{\@leadauthor}\ifnum \value{authors} > 1\hspace{5pt}\textit{et al.}\fi}
-\fancyfoot[RE]{\footerfont BIH@Charite}
-\fancyfoot[LO]{\footerfont \textbf{AG-Sawitzki}\hspace{7pt}\today\hspace{7pt}LaTex v2025\hspace{7pt} Report}
+\fancyfoot[RE]{\footerfont \color{blau}\textbf{BIH@Charite}}
+\fancyfoot[LO]{\footerfont \color{korall}\textbf{AG-Sawitzki}\hspace{7pt}\today\hspace{7pt}LaTex v2025\hspace{7pt} Report}
 % 
 \renewcommand{\headrulewidth}{0pt}% % No header rule
 \renewcommand{\footrulewidth}{0pt}% % No footer rule
@@ -523,7 +523,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 %% Custom title page
 \renewcommand{\@maketitle}{\vskip-8.5\p@%
 {\includegraphics[height=24.5pt,width=66.4pt]{Images/T-cell-checkpoints-in-infection-pathologies_v3-04-1024x516.png}%
- \put(28.9,9.05){\color{lavendel}\sffamily\bfseries\footnotesize STUDY REPORT}\put(95,3.55){\color{lavendel80}{\rule{0.5pt}{16pt}}}\put(105,9.05){\color{lavendel}\sffamily\bfseries\footnotesize XenSegEval}\par\vskip11\p@%
+ \put(28.9,9.05){\color{blau}\sffamily\bfseries\footnotesize STUDY REPORT}\put(95,3.55){\color{korall}{\rule{0.5pt}{16pt}}}\put(105,9.05){\color{blau}\sffamily\bfseries\footnotesize XenSegEval}\par\vskip11\p@%
 \ifthenelse{\boolean{shortarticle}}
   {\ifthenelse{\boolean{singlecolumn}}{}{
     {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
@@ -757,10 +757,10 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \lstdefinelanguage{Ini}{%
     basicstyle=\ttfamily\scriptsize,
     columns=fullflexible,
-    morecomment=[s][\color{spirit50g}\bfseries]{[}{]},
+    morecomment=[s][\color{schwarz}\bfseries]{[}{]},
     morecomment=[l]{\#},
     morecomment=[l]{;},
-    commentstyle=\color{nature50g}\ttfamily,
+    commentstyle=\color{natureD}\ttfamily,
     morekeywords={},
     otherkeywords={=},
     keywordstyle={\color{life}\bfseries},
@@ -788,7 +788,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 	title=\lstname,
     language=Ini,
     stringstyle={\color{harmony}},
-    morestring=[d][\color{harmony50g}]{'},
+    morestring=[d][\color{harmonyD}]{"},
 }
 % 
 \lstdefinestyle{custombash}{%
@@ -815,7 +815,8 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 	title=\lstname,
     language=bash,
     stringstyle={\color{harmony}},
-    morestring=[d][\color{harmony50g}]{'},
+    morestring=[d][\color{harmonyD}]{'},
+    commentstyle=\it\color{gray!60},
 }
 % 
 \RequirePackage{dirtree}
@@ -823,5 +824,19 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \renewcommand*\DTstylecomment{\rmfamily\color{schwarz50}\textsc}
 \DTsetlength{0.1em}{1em}{0.1em}{0.4pt}{0.4pt}
 %
+% 
+% 
+% for the code we need special commands:
+\usepackage{tcolorbox}
+\newtcbox{\inlinecode}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=blau!40, colframe=white, fontupper={\ttfamily \footnotesize}}
+% \newtcbox{\inlinebutton}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=buttoncolor!70!white, colframe=white, fontupper={\ttfamily \footnotesize}}
+% \newtcbox{\inlineoutput}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=outputcolor!50!white, colframe=white, fontupper={\ttfamily \footnotesize}}
+% \newtcbox{\inlineinput}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=inputcolor!45!white, colframe=white, fontupper={\ttfamily \footnotesize}}
+\newtcbox{\inlinepath}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=gold!40, colframe=white, fontupper={\ttfamily \footnotesize}}
+\newtcbox{\inlineprogram}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=lavendel!40, colframe=white, fontupper={\ttfamily \footnotesize}}
+% \newtcbox{\inlinefile}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=filecolor!80!white, colframe=white, fontupper={\ttfamily \footnotesize}}
+% 
+% 
+% \newtcbox{\titleprogram}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=???!60, colframe=white, fontupper={\ttfamily}}
 % ------------------------------------------------------------------------
 \endinput
