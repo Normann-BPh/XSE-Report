@@ -118,11 +118,11 @@ use = false
 [evaluation.cs_bench]
 use = false
 
+# principal components
+[evaluation.pca]
+use = true
+
 # not implemented yet
-	# principal components
-	[evaluation.pca]
-	use = true
-	
 	# probability density
 	[evaluation.pd]
 	use = false
@@ -130,11 +130,11 @@ use = false
 
 [evaluation.cross]
 use = false
-# "cs" or "af1"
-benchmark = "af1"
+# 'cs' or 'af1'
+benchmark = 'af1'
 # choose metric according to benchmark
-metric = "Jaccard"
-# relevant for "af1"
+metric = 'Jaccard'
+# relevant for 'af1'
 threshold = 0.5
 \end{lstlisting}
 %
