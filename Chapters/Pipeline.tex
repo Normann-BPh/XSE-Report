@@ -4,8 +4,8 @@ All configurations are done in the \inlinepath{config.toml} file. It begins with
 \begin{lstlisting}[caption=config, style=customIni]
 # TOML for XenSegEval
 [owner]
-name = "Normann-BPh"
-mail = "philomina-lillie.normann@bih-charite.de"
+name = "<user-name>"
+mail = "<email>@<address>"
 
 [tasks]
 preprocess = false
@@ -50,7 +50,7 @@ All tasks are send to the HPC if the pipeline is run. the parameters below confi
 \begin{lstlisting}[caption=config, style=customIni]
 [sbatch]
 # sbatch job specifications
-gpu = "gpu:l40:1"
+gpu = "gpu:1"
 # time in days
 time = 2
 # RAM in gigabyte
@@ -77,15 +77,13 @@ Below an example bash file for the evaluation of {\color{dinocell}\textsc{DINOCe
 . ~/.bashrc
 export PIXI_CACHE_DIR=~/scratch/.cache/pixi
 #
-pixi run pixi run -e eval python -m XenSegEval.eval.eval -c config.toml -m dinocell
+pixi run -e eval python -m XenSegEval.eval.eval -c config.toml -m dinocell
 \end{lstlisting}
 \subsubsection*{Preprocessing}
 to process the morphology image as needed configure the part below
 \begin{lstlisting}[caption=config, style=customIni]
 [preprocessing]
 # layers user is interested in
-# leave list empty if only
-# multi-layer required
 planes = [5, 6, 7]
 # number of expected sections
 n_roi = 12
@@ -130,11 +128,10 @@ use = true
 
 [evaluation.cross]
 use = false
-# 'cs' or 'af1'
-benchmark = 'af1'
+# 'cs' or 'u4n'
 # choose metric according to benchmark
 metric = 'Jaccard'
-# relevant for 'af1'
+# relevant for 'u4n'
 threshold = 0.5
 \end{lstlisting}
 %
@@ -151,7 +148,7 @@ rsatoin
 \begin{figure}
     \label{fig:directory structure}
     \dirtree{%
-        .1 \textless smaple name\textgreater.
+        .1 \textless sample name\textgreater.
         .2 processed.
         .3 \textless section\textgreater.
         .4 boundaries.

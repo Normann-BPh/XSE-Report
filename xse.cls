@@ -522,7 +522,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \newcommand{\articletype}[1]{\def\@articletype{\footnotesize\sffamily#1}}
 %% Custom title page
 \renewcommand{\@maketitle}{\vskip-8.5\p@%
-{\includegraphics[height=24.5pt,width=66.4pt]{Images/T-cell-checkpoints-in-infection-pathologies_v3-04-1024x516.png}%
+{\includegraphics[height=24.5pt,width=66.4pt]{Images/251121A_BIH_Logo_RGB_BIH_Logo_Standard_BlauKorall.png}%
  \put(28.9,9.05){\color{blau}\sffamily\bfseries\footnotesize STUDY REPORT}\put(95,3.55){\color{korall}{\rule{0.5pt}{16pt}}}\put(105,9.05){\color{blau}\sffamily\bfseries\footnotesize XenSegEval}\par\vskip11\p@%
 \ifthenelse{\boolean{shortarticle}}
   {\ifthenelse{\boolean{singlecolumn}}{}{
