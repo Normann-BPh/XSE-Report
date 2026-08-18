@@ -46,7 +46,7 @@ y = 64612
 x = 51096
 \end{lstlisting}
 width and height of the image | the variables x and y | mustn't be provided. pixelsizes should be checked before and corrected if necessary.\\
-All tasks are send to the HPC if the pipeline is run. the parameters below configure for the SLURM nodes. using the function \inlineprogram{XenSegEval.utils.submit\us sbatch} the parameteres are collected and written into a job file in \inlinepath{(home)/(sample\us name)/run/jobs/\textless method\textgreater.sh}
+All tasks are send to the HPC if the pipeline is run. the parameters below configure for the SLURM nodes. using the function \inlineprogram{XenSegEval.utils.submit\us sbatch} the parameteres are collected and written into a job file.
 \begin{lstlisting}[caption=config, style=customIni]
 [sbatch]
 # sbatch job specifications
@@ -58,14 +58,13 @@ mem = 64
 # nr. cores
 cpu = 20
 \end{lstlisting}
-all, except ProSeg, require a gpu to work efficiently and to provide results comparable to those presented here. the variable must be exactly as the server requires the definition. for the BIH HPC cluster it's defined as above, gpu:abbreviation:amount. the pipeline runs on a 1.2K x 1.7K image for roughly an hour and a half, for safety each node is started with a 2day time limit. some processes, especially ProSeg and image preprocessing, need high RAM. many processes are parallelized using pythons multiprocessing, right amounts of cores can speedup the processes. currently the most cores are required by the cross evaluation, one core for each output = 15 cores.\\
+all, except ProSeg, require a gpu to work efficiently and to provide results comparable to those presented here. the variable must be exactly as the server requires the definition. for the BIH HPC cluster it's defined as above, \inlinecode{gpu:abbreviation:amount} if a specific gpu should be requestid, or \inlinecode{gpu:amount} if any suffices. the pipeline runs on a 1.2K x 1.7K image for roughly an hour, for safety each node is started with a 2day time limit. some processes, especially ProSeg and image preprocessing, need high RAM. many processes are parallelized using pythons multiprocessing, right amounts of cores can speedup the processes. currently the most cores are required by the cross evaluation, one core for each output = 20 cores.\\
 Below an example bash file for the evaluation of {\color{dinocell}\textsc{DINOCell}} which is then send to an HPC node and executed. 
 \begin{lstlisting}[style=custombash]
 #!/bin/bash
 #
 #SBATCH --job-name=eval_dinocell
 #SBATCH --wait
-#SBATCH --gres=gpu:l40:1
 #SBATCH --time=2-00
 #SBATCH --mem=64G
 #SBATCH --cpus-per-task=20
@@ -79,6 +78,7 @@ export PIXI_CACHE_DIR=~/scratch/.cache/pixi
 #
 pixi run -e eval python -m XenSegEval.eval.eval -c config.toml -m dinocell
 \end{lstlisting}
+this file can be found in \inlinepath{\textless home\textgreater/\textless sample\us name\textgreater/run/jobs/\textless name\textgreater.sh}
 \subsubsection*{Preprocessing}
 to process the morphology image as needed configure the part below
 \begin{lstlisting}[caption=config, style=customIni]
@@ -118,7 +118,7 @@ use = false
 
 # principal components
 [evaluation.pca]
-use = true
+use = false
 
 # not implemented yet
 	# probability density
@@ -127,12 +127,14 @@ use = true
 	overlay_image = false
 
 [evaluation.cross]
-use = false
-# 'cs' or 'u4n'
-# choose metric according to benchmark
-metric = 'Jaccard'
-# relevant for 'u4n'
-threshold = 0.5
+use = true
+# choose metric
+## cs: f1, seg, jaccard, dice, PQ
+## u4n: F1, Jaccard
+metric = 'F1'
+# relevant for 'u4n' metrics
+## [0.5,...,0.9]
+threshold = 0.65
 \end{lstlisting}
 %
 \begin{figure}
