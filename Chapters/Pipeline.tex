@@ -1,7 +1,13 @@
 \section*{Pipeline}
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{Images/pipeline_overview.pdf}
+    \caption{Overview of the XenSegEval pipeline. Each step is forwarded to a node on the HPC4Research@BIH. \textbf{Preprocessing:} The input data is split into multiple sets of data based on the sections identified by \inlineprogram{XenSegEval.proessing.find\us sections}. The coordinates of these ROIs set the boundaries of the smaller datasets | comprised of imaging data, boundaries (not depicted) and SRT. \textbf{Segmentation:} The datasets are given to the segmentation algorithms. \textbf{Evaluating:} different benchmarking functions are applied on the prediction. Some require a mask.}
+    \label{fig:pipe}
+\end{figure*}
 All configurations are done in the \inlinepath{config.toml} file. It begins with
 %
-\begin{lstlisting}[caption=config, style=customIni]
+\begin{lstlisting}[style=customIni, caption={config - tasks}]
 # TOML for XenSegEval
 [owner]
 name = "<user-name>"
@@ -17,25 +23,25 @@ evaluate = false
 the owner variable is not relevant for the pipeline. \inlinecode{mail} is used to send SLURM updates from the HPC. if the pipeline is run as is, then it requires a SLURM server. information on start, fail, end and time limits are sent to the mail. \\
 The subprocesses of preprocessing the images, segmenting on them and then evaluating with a given section are only started if their respective value is set to \inlinecode{true}. \\
 Finding the data, providing an output directory and evaluation require certain paths. all necessary paths are given below and can be found in the default config file.
-\begin{lstlisting}[caption=config, style=customIni]
+\begin{lstlisting}[style=customIni, caption={config - paths}]
 [paths]
 # directory the processed data will be saved to
 # as default this will be the cloned directory
 home = "drive/group/user/home/"
 # directory of Xenium-results
-data_path = "(home)/xenium_output/"
+data_path = "/.../xenium_output/"
 # give a name to the sample
 sample_name = "TMA[X]"
 # path to ground_truth
-gt_path = "home/ground_truth.tif"
+gt_path = "/.../ground_truth.tif"
 # path to the user-defined section
 # one must have the same coordinates
 # as the gt-masks
-sections_path = "home/section.json"
+sections_path = "/.../section.json"
 \end{lstlisting}
 all paths above are required to be defined before starting the pipeline. \inlinecode{home} defines the directory where the output - images \& transcripts, segments, evaluation, logs - will be saved and where the ground-truth as well as the file to it's coordinates are located. \inlinecode{data\us path} is the directory containing the Xenium output as defined above. \inlinecode{sample\us name} the name to give the sample run, example: TMA1 for tissue microarray 1. \inlinecode{gt\us path} the path to the groundtruth masks. required if evaluation based on Jaccard and co is used. \inlinecode{sections\us path} the path to a json file of the section to evaluate on. required if running any evaluation. the provided ground truth must be of the same dimensions as the \inlinecode{sections\us path}. \\
 the Image has stats that are better provided, or verified, before the pipeline.
-\begin{lstlisting}[caption=config, style=customIni]
+\begin{lstlisting}[style=customIni, caption={config - stats}]
 [ImageStats]
 # stats of the morphology.ome.tif
 # micrometer per pixel
@@ -47,7 +53,7 @@ x = 51096
 \end{lstlisting}
 width and height of the image | the variables x and y | mustn't be provided. pixelsizes should be checked before and corrected if necessary.\\
 All tasks are send to the HPC if the pipeline is run. the parameters below configure for the SLURM nodes. using the function \inlineprogram{XenSegEval.utils.submit\us sbatch} the parameteres are collected and written into a job file.
-\begin{lstlisting}[caption=config, style=customIni]
+\begin{lstlisting}[style=customIni, caption={config - job}]
 [sbatch]
 # sbatch job specifications
 gpu = "gpu:1"
@@ -60,7 +66,7 @@ cpu = 20
 \end{lstlisting}
 all, except ProSeg, require a gpu to work efficiently and to provide results comparable to those presented here. the variable must be exactly as the server requires the definition. for the BIH HPC cluster it's defined as above, \inlinecode{gpu:abbreviation:amount} if a specific gpu should be requestid, or \inlinecode{gpu:amount} if any suffices. the pipeline runs on a 1.2K x 1.7K image for roughly an hour, for safety each node is started with a 2day time limit. some processes, especially ProSeg and image preprocessing, need high RAM. many processes are parallelized using pythons multiprocessing, right amounts of cores can speedup the processes. currently the most cores are required by the cross evaluation, one core for each output = 20 cores.\\
 Below an example bash file for the evaluation of {\color{dinocell}\textsc{DINOCell}} which is then send to an HPC node and executed. 
-\begin{lstlisting}[style=custombash]
+\begin{lstlisting}[style=custombash, caption={job file}]
 #!/bin/bash
 #
 #SBATCH --job-name=eval_dinocell
@@ -81,7 +87,7 @@ pixi run -e eval python -m XenSegEval.eval.eval -c config.toml -m dinocell
 this file can be found in \inlinepath{\textless home\textgreater/\textless sample\us name\textgreater/run/jobs/\textless name\textgreater.sh}
 \subsubsection*{Preprocessing}
 to process the morphology image as needed configure the part below
-\begin{lstlisting}[caption=config, style=customIni]
+\begin{lstlisting}[style=customIni, caption={config - params}]
 [preprocessing]
 # layers user is interested in
 planes = [5, 6, 7]
@@ -105,7 +111,7 @@ what follows then are the model specific parameters. please consult the document
 
 \subsubsection*{Evaluation}
 to configure the evaluation, modify the variables under \inlinecode{[evaluation]}
-\begin{lstlisting}[caption=config, style=customIni]
+\begin{lstlisting}[style=customIni, caption={config - eval}]
 [evaluation]
 # if a evaluation should be performed based on
 # Jaccard and related scores
@@ -137,12 +143,12 @@ metric = 'F1'
 threshold = 0.65
 \end{lstlisting}
 %
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{Images/marked_regions-of-interest.png}
-    \caption{Regions marked automatically by the pipeline if no section is given.}
-    \label{fig:mROIs}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Images/marked_regions-of-interest.png}
+%     \caption{Regions marked automatically by the pipeline if no section is given.}
+%     \label{fig:mROIs}
+% \end{figure}
 % 
 rsatoin
 % 

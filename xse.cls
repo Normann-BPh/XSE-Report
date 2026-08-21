@@ -179,7 +179,7 @@
 % 
 \RequirePackage[labelfont={bf,sf},%
                 labelsep=period,%
-                figurename=Fig.]{caption}
+                figurename=Figure]{caption}
 % 
 \setlength{\columnsep}{13.5pt} % Distance between the two columns of text
 \setlength{\parindent}{12pt} % Paragraph indent
@@ -725,6 +725,9 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 \RequirePackage{listings}
+\lstset{
+    captionpos=b,
+}
 \lstdefinestyle{custompy}{ 
 	backgroundcolor=\color{weiss},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
 	basicstyle=\scriptsize\ttfamily,        % the size of the fonts that are used for the code \footnotesize

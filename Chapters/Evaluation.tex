@@ -1,10 +1,10 @@
 \section*{Evaluation}
-Evaluation of segmentation algortihm,s has long been done by comparing the rpedictions to a ground thruth, masks of cells drawn by humans, usually professionals in that area, as seen in Mesmer the TissueNet was done by crowd-sourcing the workload. This aproach has many short comings, the most obvious one that we have to trust the decisions made by the professional, and verifiyng independently requires euqally uncertain work. distinguishing between cell, nucleus, ecm, and ohter structures is often a heuristic task. nonetheless the quality of human segmentation exceeded CV, in in many cases continues to, but we arrive at limitations quit quickly especially in  dense tissue like the spleen. such compact organs complicate basic staining techniques, resulting in sub-par membrane and ribosome stains required for unubiquitous segmentation \ref{fig:focusRGB}. to not rely on a difficult to verify groundtruth [I] included two additional methods of evaluation. on is based on principal component analyssis (PCA), using the input-image, on which the segmentation was performed, to calculate metric that indicate a 'good' segmentation. the other simply compares the predictions among each other | this of course does not tell which is the colsest to a human-identifiable truth, but which algorithm provides a stable predictip of the cells. this difficulty of segmentation is extended when discussing 3d segmentation. 
+Evaluation of segmentation algortihm,s has long been done by comparing the rpedictions to a ground thruth, masks of cells drawn by humans, usually professionals in that area, as seen in Mesmer the TissueNet was done by crowd-sourcing the workload. This aproach has many short comings, the most obvious one that we have to trust the decisions made by the professional, and verifiyng independently requires euqally uncertain work. distinguishing between cell, nucleus, ecm, and ohter structures is often a heuristic task. nonetheless the quality of human segmentation exceeded CV, in in many cases continues to, but we arrive at limitations quit quickly especially in  dense tissue like the spleen. such compact organs complicate basic staining techniques, resulting in sub-par membrane and ribosome stains required for unubiquitous segmentation \ref{fig:focusBCMY}. to not rely on a difficult to verify groundtruth [I] included two additional methods of evaluation. on is based on principal component analyssis (PCA), using the input-image, on which the segmentation was performed, to calculate metric that indicate a 'good' segmentation. the other simply compares the predictions among each other | this of course does not tell which is the colsest to a human-identifiable truth, but which algorithm provides a stable predictip of the cells. this difficulty of segmentation is extended when discussing 3d segmentation. 
 \begin{figure}
     \centering
     \includegraphics[width=0.5\linewidth]{Images/focus_BCMY.png}
     \caption{The region with the best/usable membrane-stain. red: dapi, green:atp/adhesin, blue: ribo}
-    \label{fig:focusRGB}
+    \label{fig:focusBCMY}
 \end{figure}
 % 
 \subsection*{Reference Based}
@@ -13,7 +13,7 @@ we make mask. mask bad. but o well.
     \centering
     \includegraphics[width=0.5\linewidth]{Images/eval/TMA2_13-3_whole-cell_labels.jpg}
     \caption{Segmentation mask used for eval. Cell masks drawn by hand in FIJI/Labkit}
-    \label{fig:Mask}
+    \label{fig:CellMask}
 \end{figure}
 % 
 % 
