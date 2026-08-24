@@ -1,24 +1,25 @@
 \subsection*{\color{mesmer}\textsc{DeepCell-Mesmer}}
-deep-learning-enabled segmentation algorithm
-requires two channels as input
-ResNet50-backbone
-feature pyramid
-label-image-transforms
-mesmer-preprocessing
-mesmer-postprocessing
-model-training
---------------------------------
-wants to offer a generalized algotrithm?
-since adjustment for each images is error-prone work e- and requires manual labor best utilized else where. also the personell working on this needs training for this
-innovations: 1. scalable aprproac for generating large volumes of pixel.level trainging data 2. integrated deep learning pipeline that usses these datra to achieve human-level perfromance.
-for first: crowd-sourced tandem algo \& human
---> tissuenet
-second: Mesmer, sing DeepCell. 
-mesmer:
-deeplearning 
-for wholecell and nuclei,
-ResNet50-backbone + Feature Pyramid Network with four prediction heads (two nuc. two cell)
-input -> DAPI \& CD45/E-Cadherin
-normaöized!
--------------------------------
-a big human-in-the-loop project with a deep learning algorithm. deep learning, if the feature extraction is done well, proved the scientists with a deep insight into the decision making of the algorithm.
+DeepCells deep-learning model Mesmer is trained on the extensive TissueNet dataset, with a diverse set of tissues allowing {generalization to the full diversity of tissue types} constraint to the imaging methods available. The architecture is a\textit{ ResNet50 backbone coupled with a Feature Pyramid Network with four prediction heads}. The input requires a nucleus channel and a membrane or cytoplasm channel which is normalized, passed through the ResNet50 with skip connections to the Feature Pyramid. From this [state] the centre and shape of the cell are inferred, by watershed calculations extended to full-sized cells. Since the requirements to run Mesmer include two channel inputs a 3D segmentation on Xenium data is only possible if one provides sequential images.
+% deep-learning-enabled segmentation algorithm
+% requires two channels as input
+% ResNet50-backbone
+% feature pyramid
+% label-image-transforms
+% mesmer-preprocessing
+% mesmer-postprocessing
+% model-training
+% --------------------------------
+% wants to offer a generalized algotrithm?
+% since adjustment for each images is error-prone work e- and requires manual labor best utilized else where. also the personell working on this needs training for this
+% innovations: 1. scalable aprproac for generating large volumes of pixel.level trainging data 2. integrated deep learning pipeline that usses these datra to achieve human-level perfromance.
+% for first: crowd-sourced tandem algo \& human
+% --> tissuenet
+% second: Mesmer, sing DeepCell. 
+% mesmer:
+% deeplearning 
+% for wholecell and nuclei,
+% ResNet50-backbone + Feature Pyramid Network with four prediction heads (two nuc. two cell)
+% input -> DAPI \& CD45/E-Cadherin
+% normaöized!
+% -------------------------------
+% a big human-in-the-loop project with a deep learning algorithm. deep learning, if the feature extraction is done well, proved the scientists with a deep insight into the decision making of the algorithm.

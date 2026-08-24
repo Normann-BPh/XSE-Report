@@ -1,11 +1,13 @@
 \section*{Models}
-Chosen were a variety of different segmentation algorithms. some have been prove to outperform other mebers of this cllection, bit since this is a tissue type rarely discussed, and in many evaluations not thematized, testig these algorithm, all of which are popular, gives more context to there applicability. \\
-all, except ProSeg, use ML as their basis, since CV is defacto a machine leraning problem. ProSeg, which is the most stable segmentation algoriothm on Xenium output, is not  a CV-algorithm, hence the statement is true :P \\
-
+Chosen were a variety of different segmentation algorithms. some have been proven to outperform other members of this collection on certain tissues, since this is a tissue type rarely discussed, and in many evaluations not thematised, assessing these algorithm gives more context to their applicability. \\
+All of the following models, except ProSeg, use deep-learning.
+At the onset of this project multiple SRT-utilizing algorithms were considered but deemed inadequate, either because of their incompatibility with Xenium-Output or package-conflicts that could not be resolved | CellVit++, SCS, UCS and RNA2seg.
 %
 \input{Chapters/Algorithms/CPSAM}
 \input{Chapters/Algorithms/DINOCell}
 \input{Chapters/Algorithms/DISSECT}
 \input{Chapters/Algorithms/Mesmer}
 \input{Chapters/Algorithms/ProSeg}
+\input{Chapters/Algorithms/Segger}
 \input{Chapters/Algorithms/StarDist}
+\input{Chapters/Algorithms/Xenium}

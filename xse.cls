@@ -33,6 +33,8 @@
 \RequirePackage{tikz}
 \RequirePackage[framemethod=tikz]{mdframed}
 % 
+\RequirePackage{siunitx}
+% 
 %% Hyperlinking
 \RequirePackage[colorlinks=true, allcolors=blue]{hyperref}
 % 
@@ -75,7 +77,9 @@
 \definecolor{dissect}{HTML}{DC267F}
 \definecolor{mesmer}{HTML}{785EF0}
 \definecolor{proseg}{HTML}{648FFF}
+\definecolor{segger}{HTML}{ba5e3e}
 \definecolor{stardist}{HTML}{79AB59}
+\definecolor{xenium}{HTML}{6e006e}
 % 
 \definecolor{life}{HTML}{D60303}
 \definecolor{healing}{HTML}{FF790B}

@@ -1,17 +1,18 @@
 \subsection*{\color{dinocell}\textsc{DINOCell}}
-based on DINOv2
-thus also using the approach of applying a model trained on a variety of input images, thus generalizing the segmentation
-DINO and DINOv2 learn using self-supervision
-DINOv2 is competition to the SAM approach
-Dinov2: selfsupervised learning - features are learned from images allone - that is faster and requires les RAM -> easier to train on bigger datasets. 
+DINOCell, a self-supervised model, leverages, as the name suggest, the DINOv2 ViT model. 
 
-generally for self-supervised ViTs: (from DINO - paper) features contain explicit information about the semantic segmentation of an image, does not emarge as clearly with supervised ViTs, nor with cnns. (smth about momentum encoders, multi-crop training, and small patches with ViTs, being importnat) 
-DINO == self-DIstillation with NO labels. | sam and dino try to tackle the main drawbacks of ViTs; they're computationally expensive, require more data - if supervised thus also more labor - and the features have no unique properties.
+% thus also using the approach of applying a model trained on a variety of input images, thus generalizing the segmentation
+% DINO and DINOv2 learn using self-supervision
+% DINOv2 is competition to the SAM approach
+% Dinov2: selfsupervised learning - features are learned from images allone - that is faster and requires les RAM -> easier to train on bigger datasets. 
 
-drawback of SAM (from DINOCell): requires ,as seen with cpsam, architecture adapation, often substantial since they need to handle dense (and our image is even denser) mecroscopy images | many objects per frame. optimized for natural-image object segmentation . motivation for alternative pretraining strategies which better align with micrsocopy data
+% generally for self-supervised ViTs: (from DINO - paper) features contain explicit information about the semantic segmentation of an image, does not emarge as clearly with supervised ViTs, nor with cnns. (smth about momentum encoders, multi-crop training, and small patches with ViTs, being importnat) 
+% DINO == self-DIstillation with NO labels. | sam and dino try to tackle the main drawbacks of ViTs; they're computationally expensive, require more data - if supervised thus also more labor - and the features have no unique properties.
 
-obesvations from DINO: ssVITs features explicitly contain cene layout, part. ojbect bondaries. \& perform well with basic nn classifiers (k-NN) out op the box! (why ? first point i could guess why but this one...)
+% drawback of SAM (from DINOCell): requires ,as seen with cpsam, architecture adapation, often substantial since they need to handle dense (and our image is even denser) mecroscopy images | many objects per frame. optimized for natural-image object segmentation . motivation for alternative pretraining strategies which better align with micrsocopy data
 
-DINO is student-teacher based | whats that?
------------------------------
-a competitor to SAM - and thus to Cellpose. very simple implementation and aplicatin.
+% obesvations from DINO: ssVITs features explicitly contain cene layout, part. ojbect bondaries. \& perform well with basic nn classifiers (k-NN) out op the box! (why ? first point i could guess why but this one...)
+
+% DINO is student-teacher based | whats that?
+% -----------------------------
+% a competitor to SAM - and thus to Cellpose. very simple implementation and aplicatin.

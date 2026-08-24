@@ -1,4 +1,21 @@
 \documentclass[9pt,twocolumn,twoside]{xse}
+% 
+\newread\tmp
+% 
+\newcommand{\quickcharcount}[1]{%
+  \immediate\write18{texcount -1 -sum -merge -char #1.tex > #1-chars.sum}%
+  \openin\tmp=#1-chars.sum%
+  \read\tmp to \thechar%
+  \closein\tmp%
+}
+% 
+\newcommand{\quickwordcount}[1]{%
+  \immediate\write18{texcount -1 -sum -merge #1.tex > #1-words.sum}%
+  \openin\tmp=#1-words.sum%
+  \read\tmp to \theword%
+  \closein\tmp%
+}
+% 
 % \usepackage{graphicx} % Required for inserting images
 % 
 % \usepackage{upgreek}
@@ -37,6 +54,9 @@
 % 
 \begin{document}
 % 
+\quickwordcount{main}
+\quickcharcount{main}
+% 
 \title{Evaluation of Cell-Segmentation Algorithms on Influenza infected Mouse-Spleen Cells}
 %
 \author[a,b]{Philomina Lillie Normann}
@@ -48,10 +68,10 @@
 \keywords{Python $|$ Cell Segmentation $|$ Evaluation $|$ Xenium $|$ SRT}
 % 
 \begin{abstract}
-    Cell Segmentation as a growing field has many challenges to face. Analysis of the large datasets cannot be performed by hand. another such challenge, densely packed cells in all dimensions, has yet to be conquered universally. In this report multiple state of the art algorthims are tested on Spleen samples. an known densly packed tissue with important immunological functions. We observe struggle predicting on the sparsity of available image data. Algorithms incorporating SRT data improve significantly. Jaccard based evaluation as well as a reference free method show limited applicability in evaluating segmentation results. The first is rooted in high-quality human-segentation, the latter's heuristics requires ... . Additionally we present a pipeline to prepare, segment and then evaluate on xenium v3 output. \\
+    Cell Segmentation as a growing field has many challenges to face. Recent studies have shown declining quality in high density tissue, nonetheless these large datasets cannot be analysed by hand, considering that machine-segmentation statistically outperforms humans. In this report multiple state of the art algorithms are tested on Xenium v2 fixed spleen samples. The large lymphoid organ is densely packed with cells, more so in the mantle zones. Its important immunological functions are key to understanding the adaptive immune system and responses to disease-spread. Despite significant advancements in computer vision, almost universal struggle can be observed in predicting cells in the spleen tissue. Methods restricted to imaging data underperform, where as those incorporating spatially resolved transcriptomics improve significantly. To quantify the study we used common evaluation metrics, intersection over union, as well as a reference free approach. Both suggest a limited applicability in evaluating segmentation results. Additionally we present a pipeline to prepare, segment and then evaluate on Xenium v2/v3 output. \\
 \end{abstract}
 % 
-\dates{Edited by P.N.; This manuscript was compiled on \today}
+\dates{Edited by P.N.; This manuscript was compiled on \today. \the\numexpr\theword+\thechar\relax\ characters}
 % 
 \maketitle
 \thispagestyle{firststyle}

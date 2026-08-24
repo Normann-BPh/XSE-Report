@@ -1,14 +1,2 @@
 \subsection*{\color{stardist}\textsc{StarDist}}
-cnn
-predict star-convex polyhedron representation
-modified 3D variant of ResNet to predict radial distances and object prob.
-neither SAM nor DINO
-an approach that has provided stable results, integrated in FIJI and QPath
----------------------------
-Cell Detection with Star-convex Polygons: 
--------
-Star-convex Polyhedra for 3D Object Detection and Segmentation in Microscopy: 
--------
-Nuclei Instance Segmentation and Classification in Histopathology Images with Stardist: 
----------------------------
-using an interesting approach for cell shape prediction, the star-convex thingies. with plugins for QPath and FIJI. 
+The deep Convolutional Neural Network StarDist maps a cell, or nuclei, not to a bounding box but to a star-convex polygon or polyhedron, depending on the dimensionality of the task. By replacing background-classification as a binary task with that of a Euclidean distance to the nearest background-pixel | those not part of an object |  StarDist can theoretically better identify roundish shapes, like nuclei. The actual bounds of the prediction are computed by following the k radial-directions until a pixel with a differing identification is encountered. This computation is GPU-implemented, meaning it can be accessed on demand during training. The 3D implementation replaces the U-net backbone with a 3D variant of ResNet to predict radial distances and object probabilities. Additionally to the python API a plugin for FIJI and QuPath are also available.
