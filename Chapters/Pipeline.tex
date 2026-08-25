@@ -21,8 +21,8 @@ evaluate = false
 
 % \lstinputlisting{config.toml}
 the owner variable is not relevant for the pipeline. \inlinecode{mail} is used to send SLURM updates from the HPC. if the pipeline is run as is, then it requires a SLURM server. information on start, fail, end and time limits are sent to the mail. \\
-The subprocesses of preprocessing the images, segmenting on them and then evaluating with a given section are only started if their respective value is set to \inlinecode{true}. \\
-Finding the data, providing an output directory and evaluation require certain paths. all necessary paths are given below and can be found in the default config file.
+The sub-processes of preprocessing the images, segmenting on them and then evaluating with a given section are only started if their respective value is set to \inlinecode{true}. \\
+Finding the data, providing an output directory and evaluation require certain paths. all necessary paths are given below and can be found in the default configuration file.
 \begin{lstlisting}[style=customIni, caption={config - paths}]
 [paths]
 # directory the processed data will be saved to
@@ -115,27 +115,22 @@ to configure the evaluation, modify the variables under \inlinecode{[evaluation]
 [evaluation]
 # if a evaluation should be performed based on
 # Jaccard and related scores
+# by Caicedo et al.
 [evaluation.jaccard]
 use = false
 
-# Jaccard but by cs-benchmark
-[evaluation.cs_bench]
+# Jaccard but by deepcell
+[evaluation.dc-tools]
 use = false
 
 # principal components
 [evaluation.pca]
 use = false
 
-# not implemented yet
-	# probability density
-	[evaluation.pd]
-	use = false
-	overlay_image = false
-
 [evaluation.cross]
 use = true
 # choose metric
-## cs: f1, seg, jaccard, dice, PQ
+## dc: f1, seg, jaccard, dice, PQ
 ## u4n: F1, Jaccard
 metric = 'F1'
 # relevant for 'u4n' metrics

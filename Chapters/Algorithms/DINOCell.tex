@@ -1,5 +1,5 @@
 \subsection*{\color{dinocell}\textsc{DINOCell}}
-DINOCell, a self-supervised model, leverages, as the name suggest, the DINOv2 ViT model. 
+DINOCell, a self-supervised model, leverages, as the name suggest, the DINOv2 ViT model, opting for a similar strategy as for Cellpose-SAM. The DINO model (DIstillation with NO labels) is a Visual Transformer with self-supervised learning of a Student-Teacher network fashion. DINOCell applies DINOv2 on microscopy data by two-step extended learning. First DINOcv2 is trained on unlabled microscopy images, then fine tuned under supervision.
 
 % thus also using the approach of applying a model trained on a variety of input images, thus generalizing the segmentation
 % DINO and DINOv2 learn using self-supervision
