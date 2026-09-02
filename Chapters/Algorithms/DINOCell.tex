@@ -1,6 +1,8 @@
 \subsection*{\color{dinocell}\textsc{DINOCell}}
-DINOCell, a self-supervised model, leverages, as the name suggest, the DINOv2 ViT model, opting for a similar strategy as for Cellpose-SAM. The DINO model (DIstillation with NO labels) is a Visual Transformer with self-supervised learning of a Student-Teacher network fashion. DINOCell applies DINOv2 on microscopy data by two-step extended learning. First DINOcv2 is trained on unlabled microscopy images, then fine tuned under supervision.
-
+\textsc{DINOCell}, a self-supervised model, leverages, as the name suggest, the DINOv2 ViT model, opting for a similar strategy as CPSAM \cite{stillwagon_self-supervised_2026}. The DINO model (distillation with no labels) is a visual transformer with self-supervised learning of a Student-Teacher network fashion \cite{caron_emerging_2021}. The improved DINOv2 exhibits strong domain priors, recognizing similar semantic information in different images depicting related objects \cite{oquab_dinov2_2024}.\\
+\textsc{DINOCell} applies DINOv2 on microscopy data in a three-step extended learning process. First self-supervised pretraining with DINOv2, then trained on unlabeled microscopy images for domain adaptation, finally fine tuned under human-supervision. Matching the approach of Cellpose and SAMCell \cite{stringer_cellpose_2021} \cite{vandeloo_samcell_2025}, instead of predicting masks, a geometric sub-problem is solved, the pixel-wise vector-flows, from which the mask can be derived.\\
+Input for \textsc{DINOCell} is a single 2D image, optionally with multiple channels, of undefined shape. During processing the channels are separated and converted to gray scale, meaning composite-information is lost.\\
+The output is a single bitmap of masks.
 % thus also using the approach of applying a model trained on a variety of input images, thus generalizing the segmentation
 % DINO and DINOv2 learn using self-supervision
 % DINOv2 is competition to the SAM approach

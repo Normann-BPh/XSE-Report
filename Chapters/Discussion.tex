@@ -1,3 +1,15 @@
 \section*{Discussion}
+This report focuses on not a decisive evaluation of the generalized applicability of this algorithm-collection, but the case-specific use on Xenium and Spleen data. The evaluation is limited in its merit, chiefly rooted in the necessity of a ground-truth and its apparent quality. The custom-pipeline, inevitably developed in tandem, though fully functional, has yet to be tested by unfamiliar users.\\
+The reference-based analysis, under consideration of the visual interpretation, showed a clear dominance of \textsc{XOA}. The prerequisite to call upon the human ... examplifies the (trust) we can (put into) reference-based evaluations. 
 - obvious limitations of the algortihms AND the evaluation methods.\\
-to consider as future development: GANs (generative adversarial networks) to generate known "spleen" images. different approach: using statistical modeling to generate three-dimensional "spleen" tissue with known location and type of cell | this could be supported by 2p-microscopy images?
+to consider as future development: GANs (generative adversarial networks) to generate known "spleen" images. different approach: using statistical modeling to generate three-dimensional "spleen" tissue with known location and type of cell --- this could be supported by 2p-microscopy images? \\
+XOA was trained on xenium-based manual segmentation --- thus my own segmentation is probably the closest to what others drew\\
+the f1 DT value/calculation has to be scrutinised --- it appears untrustworthy\\
+the PQ value has very very low values. why? \\
+as seen, no solitary value should ever be used to quantify the quality of a prediction. instead a collection of different values must be considered.\\
+the approach of CSE could be adapted to include the information of SRT for the protein/cell type analysis, since it obviously contains more information than the protein stains of Xenium.\\
+cross eval is based on the expectation, that there are multiple alogrithms that perform well. also it should be performed in tandem with a typical reference based analysis to identify candidates that one would expect to perform well, that then can be verified to explain together a similar segmentation. this is a rudimentary approach as the probability one. the threshold should either be kept low at .5 or set to a value inferred from the gt-based analysis.\\
+the transcript tables beign in pixel format might impede on prosegs performance..\\
+the cross evalation can, without a gt, identify similarities in the predictions.\\ 
+(According to Davide Chicco and Giuseppe Jurman, the F1 score is less truthful and informative than the Matthews correlation coefficient (MCC) in binary evaluation classification \href{https://doi.org/10.1186%2Fs12864-019-6413-7}{doi})\\
+This was evident to the CSE developers, as they write in their paper. The analysis works best in tissues with heterogenous expression and cell types, with a multitude of markers. Additionally the cell-shape: it is not penalised when nonsensical shapes are proposed.\\

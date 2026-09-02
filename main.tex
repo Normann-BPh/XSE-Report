@@ -68,7 +68,7 @@
 \keywords{Python $|$ Cell Segmentation $|$ Evaluation $|$ Xenium $|$ SRT}
 % 
 \begin{abstract}
-    Cell Segmentation as a growing field has many challenges to face. Recent studies have shown declining quality in high density tissue, nonetheless these large datasets cannot be analysed by hand, considering that machine-segmentation statistically outperforms humans. In this report multiple state of the art algorithms are tested on Xenium v2 fixed spleen samples. The large lymphoid organ is densely packed with cells, more so in the mantle zones. Its important immunological functions are key to understanding the adaptive immune system and responses to disease-spread. Despite significant advancements in computer vision, almost universal struggle can be observed in predicting cells in the spleen tissue. Methods restricted to imaging data underperform, where as those incorporating spatially resolved transcriptomics improve significantly. To quantify the study we used common evaluation metrics, intersection over union, as well as a reference free approach. Both suggest a limited applicability in evaluating segmentation results. Additionally we present a pipeline to prepare, segment and then evaluate on Xenium v2/v3 output. \\
+    Cell Segmentation as a growing field has many challenges to face. Recent studies have shown declining quality in high density tissue, nonetheless these large datasets cannot be analysed by hand, considering that machine-segmentation statistically outperforms humans. In this report multiple state of the art algorithms are tested on Xenium v2 fixed spleen samples. The large lymphoid organ is densely packed with cells, more so in the mantle zones. Its important immunological functions are key to understanding the adaptive immune system and responses to disease-spread. Despite significant advancements in computer vision, almost universal struggle can be observed in predicting cells in the spleen tissue. Methods restricted to imaging data underperform, where as those incorporating spatially resolved transcriptomics improve significantly. To quantify the study I used common evaluation metrics, intersection over union, as well as a reference free approach. Both suggest a limited applicability in evaluating segmentation results. Additionally I present a pipeline to prepare, segment and then evaluate on Xenium v2/v3 output. \\
 \end{abstract}
 % 
 \dates{Edited by P.N.; This manuscript was compiled on \today. \the\numexpr\theword+\thechar\relax\ characters}
@@ -88,8 +88,11 @@
 % 
 \input{Chapters/Discussion}
 % 
-\dataavail{is there. in \href{https://github.com/AG-Sawitzki/XenSegEval}{repo}. but is private. :P}
+\dataavail{The repository containing all scripts can be found here \href{https://github.com/AG-Sawitzki/XenSegEval}{https://github.com/AG-Sawitzki/XenSegEval}.}
 \acknow{Thanks :3}
 \showacknow
-% \bibliography{}
+% 
+% 
+\input{bib}
+% 
 \end{document}

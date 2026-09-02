@@ -34,6 +34,8 @@
 \RequirePackage[framemethod=tikz]{mdframed}
 % 
 \RequirePackage{siunitx}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{textcomp}
 % 
 %% Hyperlinking
 \RequirePackage[colorlinks=true, allcolors=blue]{hyperref}
@@ -215,6 +217,8 @@
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 
+\RequirePackage{lastpage}  % Number of pages in the document
+% 
 %% Bibliography
 %% v1.41 (15/11/2016)
 %% Use pnas-new.bst if available
@@ -241,7 +245,7 @@
 % 
 \renewcommand\@biblabel[1]{ #1.} % Remove brackets from label
 \def\tagform@#1{\maketag@@@{\bfseries(\ignorespaces#1\unskip\@@italiccorr)}}
-\renewcommand{\eqref}[1]{\textup{{\normalfont Eq.~(\ref{#1}}\normalfont)}}
+\renewcommand{\eqref}[1]{\textup{{\normalfont Eq.~\ref{#1}}\normalfont}}
 % 
 \renewenvironment{thebibliography}[1]{%
 \strip\bibsection
@@ -272,7 +276,7 @@
  }%
  \endlist
  \bibcleanup
- \label{LastPage}
+ % \label{LastPage}
 \endstrip}%
 % 
 %% Figure caption style
@@ -301,7 +305,6 @@
 % 
 %% Headers and footers
 \RequirePackage{fancyhdr}  % custom headers/footers
-\RequirePackage{lastpage}  % Number of pages in the document
 \pagestyle{fancy}          % Enables the custom headers/footers
 % 
 \fancypagestyle{firststyle}{
@@ -557,37 +560,37 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \vskip\pnas@vertadjust
 }
 % 
-\renewenvironment{thebibliography}[1]{%
-\strip\bibsection
- \parindent\z@
- \labelsep2.8pt
- \bibpreamble
-\fontsize{6.75pt}{8pt}\selectfont
- \list{\@biblabel{\the\c@NAT@ctr}}{\@bibsetup{#1}\global\c@NAT@ctr\z@}%
- \ifNAT@openbib
-   \renewcommand\newblock{\par}%
- \else
-   \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
- \fi
- \sloppy
- \clubpenalty4000\widowpenalty4000
- \sfcode`\.\@m
- \let\NAT@bibitem@first@sw\@firstoftwo
-    \let\citeN\cite \let\shortcite\cite
-    %\let\citeasnoun\cite\xbibfont
-	%\begin{minipage}[h!]{2\textwidth}
-\bibfont\raggedright
+% \renewenvironment{thebibliography}[1]{%
+% \strip\bibsection
+%  \parindent\z@
+%  \labelsep2.8pt
+%  \bibpreamble
+% \fontsize{6.75pt}{8pt}\selectfont
+%  \list{\@biblabel{\the\c@NAT@ctr}}{\@bibsetup{#1}\global\c@NAT@ctr\z@}%
+%  \ifNAT@openbib
+%    \renewcommand\newblock{\par}%
+%  \else
+%    \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
+%  \fi
+%  \sloppy
+%  \clubpenalty4000\widowpenalty4000
+%  \sfcode`\.\@m
+%  \let\NAT@bibitem@first@sw\@firstoftwo
+%     \let\citeN\cite \let\shortcite\cite
+%     %\let\citeasnoun\cite\xbibfont
+% 	%\begin{minipage}[h!]{2\textwidth}
+% \bibfont\raggedright
 	
-}{%\end{minipage}%
- \bibitem@fin
- \bibpostamble
- \def\@noitemerr{%
-  \PackageWarning{natbib}{Empty `thebibliography' environment}%
- }%
- \endlist
- \bibcleanup
- \label{LastPage}
-\endstrip}%
+% }{%\end{minipage}%
+%  \bibitem@fin
+%  \bibpostamble
+%  \def\@noitemerr{%
+%   \PackageWarning{natbib}{Empty `thebibliography' environment}%
+%  }%
+%  \endlist
+%  \bibcleanup
+%  \label{LastPage}
+% \endstrip}%
 
 \def\@outputdblcol{%
     \if@firstcolumn
@@ -835,15 +838,22 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 % 
 % for the code we need special commands:
 \usepackage{tcolorbox}
-\newtcbox{\inlinecode}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=blau!40, colframe=white, fontupper={\ttfamily \footnotesize}}
+\newtcbox{\inlinecode}{
+    on line, arc=1pt, colback=blau!40, colframe=white, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, fontupper={\ttfamily \footnotesize}}
 % \newtcbox{\inlinebutton}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=buttoncolor!70!white, colframe=white, fontupper={\ttfamily \footnotesize}}
 % \newtcbox{\inlineoutput}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=outputcolor!50!white, colframe=white, fontupper={\ttfamily \footnotesize}}
 % \newtcbox{\inlineinput}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=inputcolor!45!white, colframe=white, fontupper={\ttfamily \footnotesize}}
-\newtcbox{\inlinepath}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=gold!40, colframe=white, fontupper={\ttfamily \footnotesize}}
-\newtcbox{\inlineprogram}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=lavendel!40, colframe=white, fontupper={\ttfamily \footnotesize}}
+\newtcbox{\inlinepath}{
+    on line, arc=1pt, colback=gold!40, colframe=white, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, fontupper={\ttfamily \footnotesize}}
+\newtcbox{\inlineprogram}{
+    on line, arc=1pt, colback=lavendel!40, colframe=white, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, fontupper={\ttfamily \footnotesize}}
 % \newtcbox{\inlinefile}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=filecolor!80!white, colframe=white, fontupper={\ttfamily \footnotesize}}
 % 
 % 
 % \newtcbox{\titleprogram}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=???!60, colframe=white, fontupper={\ttfamily}}
 % ------------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\figref[1]{\textup{{\normalfont Fig.~\ref{#1}}\normalfont}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
 \endinput
