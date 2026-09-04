@@ -3,7 +3,7 @@ The custom pipeline at the centre of this project prepares the Xenium-output for
 The main file is hard-coded for the high performance cluster (HPC) of the Berlin Institute of Health (BIH). Running this pipeline on a different HPC or on the a personal machine necessitates adaptation.
 \begin{figure*}[ht]
     \centering
-    \includegraphics[width=\linewidth]{Images/pipeline_overview.pdf}
+    \includegraphics[width=\linewidth]{Images/pipeline_overview_new.pdf}
     \caption{Overview of the XenSegEval pipeline. Each step is forwarded to a node on the HPC4Research@BIH. \textbf{Preprocessing:} The input data is split into multiple sets based on the sections identified by \inlineprogram{XenSegEval.proessing.find\us sections} or the section provided by the user in a JSON file. The coordinates of these ROIs set the boundaries of the smaller datasets --- comprised of imaging data, boundaries (not depicted) and SRT. \textbf{Segmentation:} The datasets are given to the segmentation algorithms. \textbf{Evaluating:} Different benchmarking functions are applied on the predictions. Reference based analysis requires a user-provided ground-truth.}
     \label{fig:pipe}
 \end{figure*}
@@ -29,7 +29,7 @@ The pipeline requires the data-location and output-directory to be set beforehan
     \item[] \inlinepath{home/sample\us name/results/\textless method \textgreater/}: predictions and evaluation;
     \item[] \inlinepath{home/sample\us name/run/}: logs and job-files.
 \end{itemize}
-The \inlinecode{data\us path} variable must link to an unedited, unzipped \textsc{Xenium}-output directory. This requirement is imposed by {\color{segger} \textsc{segger}}. If {\color{segger} \textsc{segger}} is excluded, then the content as shown in \figref{fig:XenOut} suffices.\\
+The \inlinecode{data\us path} variable must link to an unedited, unzipped \textsc{Xenium}-output directory. This requirement is imposed by {\color{segger} \textsc{segger}}. If {\color{segger} \textsc{segger}} is excluded, then the content as shown in \figref{dir:XenOut} suffices.\\
 If an evaluation with a reference-based method should be performed, then a ground truth must be prepared as a bitmap in \textsc{tif}-format and provided as a path with \inlinecode{gt\us path}. Additionally, the coordinates of the ground-truth must be written in a \textsc{json} file, and linked to in \inlinecode{sections\us path}.\\
 % caption={config - paths}
 \begin{lstlisting}[style=customIni]

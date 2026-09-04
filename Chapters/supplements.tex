@@ -118,7 +118,7 @@
     \begin{subfigure}[t]{0.5\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Images/SI/outlines/outline_mesmer_polygons_ribo.pdf}
-        \caption{Masks by \textsc{Mesmer}; Input: \inlinepath{morphology-focus}, DAPI channel and 18s rRNA channel
+        \caption{Masks by \textsc{Mesmer}; Input: \inlinepath{morphology-focus}, DAPI channel and 18s rRNA channel.}
         \label{fig:Overlay_mesmer_ribo}
     \end{subfigure}%
     ~
@@ -194,6 +194,43 @@
     \end{subfigure}%
     \caption{Outlines of the predicted masks (white), overlayed on top of the \inlinepath{morphology-focus} image (blue: DAPI; cyan: ATP1A1/CD45/E-Cadherin; magenta: 18s rRNA; yellow: alphaSMA/Vimentin).}
     \label{fig:Outlines_3}
+\end{figure*}
+
+\subsection*{Extended evaluations}
+\begin{figure*}[t!]
+    \centering
+    \begin{subfigure}[t]{0.422\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/area_bars_no_legend.pdf}
+        \caption{}
+        \label{fig:CA_bars}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.147\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/results/legend.pdf}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.422\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/jaccard_dc_cross_evaluation_newmem_fonts.pdf}
+        \caption{}
+        \label{fig:ji_cross}
+    \end{subfigure}
+    \vskip\baselineskip
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/f1_dc_cross_evaluation_newmem_fonts.pdf}
+        \caption{}
+        \label{fig:f1_cross}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/seg_dc_cross_evaluation_newmem_fonts.pdf}
+        \caption{}
+        \label{fig:seg_cross}
+    \end{subfigure}
+    \caption{The results of the evaluation using \inlineprogram{XenSegEval.eval.base}, and the \inlineprogram{DT} package. (a) presents the count (left) and relative area $\frac{SR}{GT}$ (right) for all segmentations. (b) to (d) show the cross-evaluation for the metrics Jaccard (b), F1 (c) and SEG (d).}
+    \label{fig:results}
 \end{figure*}
 
 \subsection*{Panel}
