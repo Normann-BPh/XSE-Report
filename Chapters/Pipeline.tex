@@ -29,7 +29,7 @@ The pipeline requires the data-location and output-directory to be set beforehan
     \item[] \inlinepath{home/sample\us name/results/\textless method \textgreater/}: predictions and evaluation;
     \item[] \inlinepath{home/sample\us name/run/}: logs and job-files.
 \end{itemize}
-The \inlinecode{data\us path} variable must link to an unedited, unzipped \textsc{Xenium}-output directory. This requirement is imposed by {\color{segger} \textsc{segger}}. If {\color{segger} \textsc{segger}} is excluded, then the content as shown in \figref{dir:XenOut} suffices.\\
+The \inlinecode{data\us path} variable must link to an unedited, unzipped \textsc{Xenium}-output directory. This requirement is imposed by \textsc{segger}. If \textsc{segger} is excluded, then the content as shown in \figref{dir:XenOut} suffices.\\
 If an evaluation with a reference-based method should be performed, then a ground truth must be prepared as a bitmap in \textsc{tif}-format and provided as a path with \inlinecode{gt\us path}. Additionally, the coordinates of the ground-truth must be written in a \textsc{json} file, and linked to in \inlinecode{sections\us path}.\\
 % caption={config - paths}
 \begin{lstlisting}[style=customIni]
@@ -79,7 +79,7 @@ The introduced algorithms, except ProSeg, require a graphics processing unit (GP
 Some processes, especially ProSeg and image preprocessing, demand more random-access memory (RAM), therefore the requested RAM is doubled.\\ 
 The right amount of cores to which subprocesses are distributed, can speed-up the processes, hence many are parallelized using pythons multiprocessing. Currently the most cores are required by the cross evaluation, one core for each output $\approx 20$ cores.\\
 Using the function \inlineprogram{XenSegEval.utils.submit\us sbatch} the parameters are collected and written into a job file, retained in \inlinepath{home/sample\us name/run/jobs/}.\\
-Below an example bash file for the evaluation of {\color{dinocell}\textsc{DINOCell}} which is then send to an HPC node and executed. 
+Below an example bash file for the evaluation of \textsc{DINOCell} which is then send to an HPC node and executed. 
 % caption={job file}
 \begin{lstlisting}[style=custombash]
 #!/bin/bash
