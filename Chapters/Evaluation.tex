@@ -1,11 +1,12 @@
 \section*{Evaluation}
-Evaluation of segmentation algorithms has long been done by comparing the cell-predictions to a ground truth, masks drawn by humans, usually professionals in the respective field --- DeepCell and the TissueNet-project crowd-sourced supervised training. The human-centered approach has many short-comings, evident is the human labour required for manual segmentation, further the reliability of these segmentations. Distinguishing between cell, nucleus, extra-cellular-matrix, and others, is often a heuristic task. Nonetheless the quality of human segmentation exceeded computer vision, and in many cases continues to, though we experience limitations promptly. Especially in dense tissues like the spleen, such compact organs complicate elementary staining techniques, resulting in sub-par membrane and ribosome stains required for unubiquitous segmentation. The tissue available, as seen in Figure \figref{fig:focus} is notably [bad]. As to not rely on a ambiguous ground-truth I included two additional methods of evaluation. The first is based on principal component analysis (PCA), using the input-image, on which the segmentation was performed, to calculate metrics which indicate a \emph{good} segmentation. The second reference free examination [simply] compares the cell-predictions to each other --- this of course does not tell which is the closest to a human-identifiable truth, but instead which algorithm provides a stable prediction of the cells.
 \begin{figure*}[ht]
     \centering
     \includegraphics[width=1\linewidth]{Images/focus.pdf}
-    \caption{A non-representative section of a Spleen-Xenium recording. The membrane-stain is  and the human-made mask.}
+    \caption{A non-representative section of a FFPE-Spleen \textsc{Xenium} recording and the manually drawn mask. The membrane-stain is notably superior to virtually all other regions in the available recordings.}
     \label{fig:focus}
 \end{figure*}
+Evaluation of segmentation algorithms has long been done by comparing the cell-predictions to a ground truth, masks drawn by humans, usually professionals in the respective field --- DeepCell and the TissueNet-project crowd-sourced supervised training. The human-centered approach has many short-comings, evident is the human labour required for manual segmentation. Further, the reliability of these segmentations. Distinguishing between cell, nucleus, extra-cellular-matrix, and other structures, is often a heuristic task. Nonetheless, the quality of human semantic-segmentation exceeded computer vision in the past, and in some cases continues to, though we, as humans, experience limitations promptly. Especially dense tissues like the spleen. Such compact organs complicate elementary staining techniques, resulting in sub-par membrane and ribosome stains required for unubiquitous segmentation. The tissue available, as seen in Figure \figref{fig:focus} is notably affected by the tissue limitations. Hence, for \textsc{Mesmer}, which requires a two channel-input, a nucleus-channel and a membrane-channel or a cytoplasm-channel, all available staining were tested, including a DAPI-only input, with an empty second-channel.\\
+As to not rely on an ambiguous ground-truth I included two additional methods of evaluation. The first is based on principal component analysis (PCA), using the input-image, on which the segmentation was performed, to calculate metrics which indicate a \emph{good} segmentation. The second reference free examination directly compares the cell-predictions to each other --- this of course does not tell which is the closest to a human-identifiable truth, but instead which algorithm provides a stable prediction of the cells.\\
 % \begin{table}[hb]
 %     \centering
 %     \begin{tabular}{l| *{8}{c} }
@@ -17,16 +18,56 @@ Evaluation of segmentation algorithms has long been done by comparing the cell-p
 %     \label{tab:placeholder}
 % \end{table}
 \subsection*{Reference Based}
-As seen in Figure \figref{fig:focus} the membrane stain (cyan) is dim and appears nonspecifically binding. This inadequacy is mirrored in the manual segmentation seen in \figref{fig:focus} (bottom left).\\
+As seen in \figref{fig:focus} the membrane stain (cyan) is dim, appears to suffer from nonspecifical binding and lacks signal in large regions. This inadequacy is mirrored in the manual segmentation seen in \figref{fig:focus} (bottom left).\\
 The test were performed using unet4nuclei's (\inlineprogram{U4N}) evaluation scripts \cite{noauthor_carpenterlab2019_caicedo_cytometrya_2025}, and the \inlineprogram{DeepCell-Toolbox} (\inlineprogram{DT}) package\cite{noauthor_deepcell-toolbox_2023}. \inlineprogram{U4N} solely matches the masks, ground-truth and prediction, to one another and calculates the JI, it then identifies the precision and recall using a user set threshold, and finally calculates the F-score.\\
-Conversly, \inlineprogram{DT} constructs a graph connecting each prediction-mask to all ground-truth masks, with the edge representing the JI. If the JI is 1 then this pair is classified as valid, All unmatched predictions are then classified as either as a merge, multiple edges of a single prediction-node have a non-zero JI --- two cells of the ground-truth are merged into a single predicted cell. Or a split, if multiple edges of a GT-cell have a non-zero JI --- the predictions split a single GT-cell.\\
-For U4N we see a clear dominance of Xenium followed by the nucleus-only mesmer-prediction. We can also observe that dissect proportionally increases in comparision to the other algorithms with increasing threshold. This is quite vexing.\\%
-The results from the DT analysis show varying dominance with mesmer and stardist consistently at the higher end. the F1 values are contrary to the U4N F1 very low.\\%
-a avg-IoU of below one-half is unexpected. the DCE values are higher that the F1s from U4N, except segger which is roughly at the same value.\\%
+Conversely, \inlineprogram{DT} constructs a graph connecting each prediction-mask to all ground-truth masks, with the edge representing the JI. If the JI is 1 then this pair is classified as valid. All unmatched predictions are then classified as either as a merge, multiple edges of a single prediction-node have a non-zero JI --- two cells of the ground-truth are merged into a single predicted cell. Or a split, if multiple edges of a GT-cell have a non-zero JI --- the predictions split a single GT-cell.\\
+For the \inlineprogram{U4N}-evaluation we see in \figref{fig:u4n_bars} a clear dominance of \textsc{StarDist}, closely followed by \textsc{XOA}s nucleus-segmentation. Both decline less pronounced with increasing threshold. Also observable is the proportional increase of \textsc{DISSECT}, \textsc{ProSeg} and \textbf{segger}, in comparison to the \textsc{CPSAM} and \textsc{Mesmer}. Diametric to \textsc{XOA}, \textsc{segger}s nucleus-prediction scores lower than its cell-prediction. \textsc{ProSeg}s second layer (proseg\us l1) scores higher than its other masks. The DAPI-only prediction of \textsc{Mesmer} (mesmer\us mt) scores considerably higher than other channel-combinations.\\%
+The results from the \inlineprogram{DT} analysis, see \figref{fig:dc_bars}, show varying dominance with \textsc{XOA} and \textsc{StarDist} consistently at the higher end. The F1 values map well onto the F1 values of \inlineprogram{U4N} at a threshold of 0.6. The SEG bar-plot presents a nearly invariant score-distribution, indicating proficient cell- and nucleus-shape prediction when considering masks with 50\% overlap with the ground-truth. The JI and DICE scores appear proportional, with similar, but less prominent, distributions as the \inlineprogram{U4N} analysis.\\%
+\begin{figure*}[t!]
+    \centering
+    \begin{subfigure}[t]{0.422\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/results/u4n_bars_no_legend.pdf}
+        \caption{}
+        \label{fig:u4n_bars}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.147\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/results/legend.pdf}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.422\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/results/dc_bars_no_legend.pdf}
+        \caption{}
+        \label{fig:dc_bars}
+    \end{subfigure}
+    \vskip\baselineskip
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/results/F1_u4n_cross_evaluation_newmem_fonts.pdf}
+        \caption{}
+        \label{fig:u4n_cross}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/results/dice_dc_cross_evaluation_newmem_fonts.pdf}
+        \caption{}
+        \label{fig:dc_cross}
+    \end{subfigure}
+    \caption{The results of the evaluation using \inlineprogram{U4N} tools (a) \& (c), the \inlineprogram{DeepCell-Toolbox} package (b) \& (d). The reference-based analysis includes (a) the F1 values at increasing IoU threshold, and, at a consistent thresholds (SEG: 0.5; F1: 0.6), (b) those of the metrics: f1 \eqref{eq:F1}, SEG \eqref{eq:SEG}, jaccard \eqref{eq:jaccard}, dice \eqref{eq:DCE}. The reference free cross-evaluations (c) \& (d) show the results for \inlineprogram{U4N}s F1-analysis and \inlineprogram{DT}s DICE-analysis, respectively.}
+    \label{fig:results}
+\end{figure*}
+
+% \begin{figure*}[ht]
+%     \centering
+%     \includegraphics[width=1\linewidth]{Images/results.pdf}
+%     \caption{The results of the evaluation using \inlineprogram{U4N} tools (top \& bottom left), the \inlineprogram{DeepCell-Toolbox} package (top \& bottom right). (top) The reference-based analysis includes (left) the F1 values at increasing IoU threshold, and, at a consistent threshold of 0.5, (right) those of the metrics: f1 \eqref{eq:F1}, SEG \eqref{eq:SEG}, jaccard \eqref{eq:jaccard}, dice \eqref{eq:DCE}.}
+%     \label{fig:results}
+% \end{figure*}
 \subsection*{Reference Free}
-Since computer vision can theoretically and practically often does outperform human-con--- human segmentation and in some cases human-consensus (cellpose) - meaning using references is bound to stop working soon.. methods evaluationg based on statistics extracted form the image to segment on or by finding a groundtruth determined by the highest probability of a mix of segmentation results. see overnext section.
+Since computer vision can theoretically and practically often does outperform manual segmentation and in some cases human-consensus \cite{pachitariu_cellpose-sam_2025}, these manually constructed references are bound to enter their limit in applicability. Methods evaluating based on statistics extracted form the image to segment on \cite{chen_evaluation_2023} or by finding a consensus through probability-aggregates of a mix of segmentation results \cite{sims_seg_2023} are recent attempts to circumvent the manual-masks.
 \subsubsection*{CellSegmentationEvaluator}
-The CellSegmentationEvaluator (CSE) \cite{chen_evaluation_2023} uses principle component analysis on 11 values that aim to abstract the image for segmentation and the prediction. The values can be categorised as follows
+The CellSegmentationEvaluator (\inlineprogram{CSE}) \cite{chen_evaluation_2023} uses principle component analysis on 11(+3) values that aim to abstract the input-image and the prediction. The values can be categorised into six groups\footnote{refer to the appendix for a complete parameter-name.}
 \begin{itemize}
     \item[1)] cells cover most areas (NC)
     \item[2)] cells cover mostly the foreground (FFC, 1-FBC, FCF)
@@ -35,9 +76,12 @@ The CellSegmentationEvaluator (CSE) \cite{chen_evaluation_2023} uses principle c
     \item[5)] homogeneous cell type composition (1/(ACVC+1), FPCC, AS) 
     \item[6)] homogeneous cell size (1/ln(SSD))
 \end{itemize}
-This includes the following assumptions: a) cell types should be roughly similar in composition across all channels, b) cell types can be approximated by cell clusters; c) the average CV(coefficient of variation) across all clusters for a given number of clusters is a proxy for similarity in composition within cell types; d) averaging the average CV across all clusters across different numbers of the cluster is also a proxy for similarity in composition within cell types. This implies the use of histochemistry with multi-plex pannels, the stainings here are constraint to dapi, 18s, alphaSMA/Vimentin and ATP1A1/E-Cadherin/CD45.\\% 
-Cell types were defined using KMeans clustering performed on the mean cell intensities across all channels after applying z-score standardization for each channel
-K, number of cell types, varied from 1 to 10
+The here-mentioned cell types were defined using K-Means clustering, performed on the mean cell intensities across all channels, after applying z-score standardization for each channel. This, of course, implies the use of histochemistry with multi-plex panels, the stainings available through \textsc{Xenium} are constrained to DAPI, ATP1A1/CD45/E-Cadherin, 18s rRNA and alphaSMA/Vimentin. The constraint in cell-type identification potentially impeaches the evaluation approach. \inlineprogram{CSE} neither encourages nor penalises uncommon or unnatural cell-shape, as long the proposed protein-composition aligns.\\
+\inlineprogram{CSE} also employs a \emph{repair-method}, which corrects nuclei that "leak" out of the cell, or cells which are too small. This repair-method was enabled for this analysis.\\
+\\
+% This collection of parameters retains the following assumptions: a) cell types should be roughly similar in composition across all channels, b) cell types can be approximated by cell clusters; c) the average CV(coefficient of variation) across all clusters for a given number of clusters is a proxy for similarity in composition within cell types; d) averaging the average CV across all clusters across different numbers of the cluster is also a proxy for similarity in composition within cell types. This . \\% 
+
+% K, number of cell types, varied from 1 to 10
 % 
 % On homogeneity of cell types (PCA):
 % and (b) as before
@@ -51,49 +95,37 @@ K, number of cell types, varied from 1 to 10
 % The metrics also do not make any assumptions about allowable cell shapes. Measuring cell shape is an inherent problem for 2D tissue images where 3D cells are only seen in a thin layer in the z-axis. Cells belonging to the same cell type might be captured at different angles or heights and therefore display different shapes. Although our metrics of homogeneity at the cell level solve this issue indirectly (since cells from the same cell type but at different views should have similar channel compositions), segmentation methods that produce cells and nuclei with unexpected shapes are not directly penalized.
 % 
 % 
-In Table \ref{tab:PCA} we see that contrary to the reference based analysis XOA performs worse than mesmer, and the staining-supported segmentations perform better than the DAPI-only segmentation.\\
-mesmer predicts more and smaller celles; xoa bigger but less; segge simlpy less.\\
-all but segger cover most of the foreground, to consider: segger has a half-empty array\\
-all but segger have good matching between cell and nuclei --- independent og number of predicted sells\\
-all exhibit middeling protein homogeneity\\
-xoa slightly higher in cell-type congruence.\\
-"cell types" seem to be consistent with their own cluster\\
-cell size is inconsistent for all\\
-\begin{table}[t]
-    \centering
+In Table \ref{tab:PCA} we see that contrary to the reference based analysis \textsc{XOA} performs worse than \textsc{Mesmer}, and the staining-supported segmentations perform better than the DAPI-only segmentation.\\ From the NC-value one can infer, that \textsc{Mesmer} predicts more and smaller cells; \textsc{XOA} bigger but less; and \textsc{segger}, calling upon our knowledge of its coverage (see Supplement \figref{fig:Overlay_segger_nuc} \& \figref{fig:Overlay_segger_cel}), predicts simply less cells. All but \textsc{segger} cover most of the foreground, aligning with the observed cell-distribution. All but \textsc{segger} match cell and nuclei well --- this measure is independent of the number of predicted cells and calculated after repairing the masks. The protein composition evaluation of all predictions is homogeneous among each other, as is the cell-type composition and predicted cell-sizes.\footnote{As this is set up as a cell- not nucleus-segmentation task, the values 1/(ACVC+1), FPCC and AS are the "Cell Not Including Nucleus (cell membrane plus cytoplasm)"-values.}\\
+Between all predictions the DAPI+18s channel combination achieves the highest score.
+% "cell types" seem to be consistent with their own cluster\\
+% cell size is inconsistent for all\\
+\begin{table}
     \caption{CellSegmentationEvaluation. Results for Mesmer, segger and xenium onboard analysis.}
     \begin{tabular}{l| *{6}{c} }
          Metrics & \multicolumn{4}{c}{Mesmer} & segger & XOA \\
                  & DAPI & + boundary & + 18s & + cyto & & \\
          \hline
-         \textbf{Quality Score} & \textbf{2.707} & \textbf{2.941} & \textbf{2.976} &  & \textbf{1.603} & \textbf{2.251} \\
+         \textbf{Quality Score} & \textbf{2.707} & \textbf{2.941} & \textbf{2.976} & \textbf{2.930} & \textbf{1.573} & \textbf{2.273} \\
          \hline
-         NC & 1.104 & 1.113 & 1.135 &  & 0.236 & 0.264 \\
+         NC & 1.104 & 1.113 & 1.135 & 1.111 & 0.235 & 0.264 \\
          \hline
-         FFC & 0.659 & 0.772 & 0.760 &  & 0.259 & 0.746 \\
-         1-FBC & 0.935 & 0.930 & 0.933 &  & 0.993 & 0.920 \\
-         FCF & 0.956 &  0.960 & 0.961 &  & 0.987 & 0.953\\
+         FFC & 0.659 & 0.772 & 0.760 & 0.724 & 0.257 & 0.748 \\
+         1-FBC & 0.934 & 0.930 & 0.933 & 0.930 & 0.991 & 0.926 \\
+         FCF & 0.956 &  0.960 & 0.961 & 0.958 & 0.985 & 0.957\\
          \hline 
-         FMCN & 0.948 & 0.955 & 0.963 &  & 0.759 & 0.932 \\
+         FMCN & 0.963 & 0.948 & 0.955 & 0.952 & 0.753 & 0.932 \\
          \hline
-         1/(ACVF+1) & 0.542 & 0.528 & 0.479 &  & 0.441 & 0.493\\
-         FPCF & 0.616 & 0.650 & 0.624 &  & 0.533 & 0.648\\
+         1/(ACVF+1) & 0.479 & 0.542 & 0.528 & 0.521 & 0.440 & 0.504\\
+         FPCF & 0.625 & 0.616 & 0.624 & 0.626 & 0.649 & 0.637\\
          \hline
-         1/(ACVC+1)& 0.626 & 0.629 & 0.620 &  & 0.702 & 0.774 \\
-         FPCC & 0.453 & 0.457 & 0.447 &  & 0.450 & 0.425\\
-         AS & 0.263 & 0.258 & 0.258 &  & 0.244 & 0.255\\
+         1/(ACVC+1)& 0.626 & 0.621 & 0.620 & 0.622 & 0.704 & 0.783 \\
+         FPCC & 0.453 & 0.457 & 0.447 & 0.472 & 0.447 & 0.427\\
+         AS & 0.263 & 0.258 & 0.258 & 0.270 & 0.258 & 0.248\\
          \hline
-         1/(ln(CSSD)+1) & 0.142 & 0.139 & 0.141 &  & 0.134 & 0.127\\
+         1/(ln(CSSD)+1) & 0.142 & 0.139 & 0.141 & 0.140 & 0.133 & 0.124\\
     \end{tabular}
     \label{tab:PCA}
 \end{table}
-bla
 \subsubsection*{Cross-Evaluation}
-Since the confidence in a given ground-truth may be scant, a comparison between the predictions, each acting as the ground-truth and performing a reference-based analysis, can give [context] to the consistency of predictions. Owing to the equal input one would expect a congruence between well performing segmentations.\\ % to the similarity between model-structure
-Consecutively comparing the predictions using IoU-based metrics results in symmetrical outputs, as seen in \figref{fig:results}. The congruency can be observed in the dc-tb based cross-ebaluation. the dinocell, mesmer, proseg, stardist and xoa predictions perform well, are congruent among each other. with cpsam, dissect and segger we see that none perform well, indicating that they are, as we see in the gt-based analysis, not good at explaining the tissue. the U4N based values are too low to see any trend. the threshold of .65 is probably to high.
-\begin{figure*}[ht]
-    \centering
-    \includegraphics[width=1\linewidth]{Images/results.pdf}
-    \caption{The results of the evaluation using \inlineprogram{U4N} tools (top \& bottom left), the \inlineprogram{DeepCell-Toolbox} package (top \& bottom right). (top) The reference-based analysis includes (left) the F1 values at increasing IoU threshold, and, at a consistent threshold of 0.5, (right) those of the metrics: f1 \eqref{eq:F1}], SEG \eqref{eq:SEG}, jaccard \eqref{eq:jaccard}, dice \eqref{eq:DCE}] and PQ \eqref{eq:PQ}.}
-    \label{fig:results}
-\end{figure*}
+Since the confidence in a given ground-truth may be scant, a comparison between the predictions, each acting as the ground-truth and performing a reference-based analysis, can give context to the consistency of predictions. Owing to the equal input one would expect a congruence between well performing segmentations. This evaluation procedure is inspired by the \inlineprogram{SEG} method \cite{sims_seg_2023}, excluding the assumption that a probabilistic combination represents an adequate ground-truth.\\ % to the similarity between model-structure
+Consecutively comparing the predictions using IoU-based metrics results in symmetrical outputs, as seen in \figref{fig:results}. The congruency can be observed in (both?) cross-evaluations. the dinocell, mesmer, proseg, stardist and \textsc{XOA} predictions perform well, are congruent among each other. with cpsam, dissect and segger we see that none perform well, indicating that they are, as we see in the gt-based analysis, not good at explaining the tissue. the U4N based values are too low to see any trend. the threshold of 0.65 is probably to high.

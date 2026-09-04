@@ -1,0 +1,204 @@
+\section*{Supplements}
+\subsection*{\inlineprogram{CellSegmentationEvaluation}- Parameters}
+\begin{itemize}
+\centering
+    \item[NC] Number of cells per 100\unit{\micro\square\meter}
+    \item[FFC] Fraction of image foreground occupied by cells
+    \item[1-FBC] Fraction of image background occupied by cells
+    \item[FCF] Fraction of cell mask in coeground
+    \item[FMCN] Fraction of match between cells and nuclei
+    \item[1/(ACVE+1)] Average CV of foreground pixels outside the cells
+    \item[FPCF] Fraction of first PC of foreground pixels outside of cells
+    \item[1/(ACVC+1)] Average of weighted average CV of cell type intensities over 1-10 clusters
+    \item[FPCC] Average of weighted average fraction of the first PC of cell type intensities over 1-10 clusters
+    \item[AS] Average Silhouette score of clustering over 2-10 clusters
+    \item[1/(ln(CSSD)+1)] Standard deviation of cell size
+\end{itemize}
+\subsection*{Directory-Structure}
+\begin{figure}[ht]
+    \small
+    \dirtree{%
+        .1 \textless sample name\textgreater.
+        .2 processed.
+        .3 \textless section\textgreater.
+        .4 boundaries.
+        .5 cell\us relative.parquet.
+        .5 nucleus\us relative.parquet.
+        .4 morphology.
+        .5 focus.
+        .6 focus.ome.tif.
+        .6 quartered.
+        .7 q0\%c.ome.tif.
+        .5 multi\us layer.
+        .6 morphology.ome.tif.
+        .6 quartered.
+        .7 q0\%c.ome.tif.
+        .5 single\us layer.
+        .6 layer0\%L.
+        .7 morphology.tif.
+        .7 quatered.
+        .8 q0\%c.tif.
+        .4 transcripts.
+        .5 relative.csv.
+        .5 relative.parquet.
+        .3 marked\us regions-of-interest.tif.
+        .3 sections\us px.json.
+        .2 results.
+        .3 \textless method\textgreater.
+        .4 evaluation.
+        .5 \textless section\textgreater.
+        .6 layer.
+        .7 DC-TOOLS.csv.
+        .7 false\us negatives.csv.
+        .7 results.csv.
+        .7 split\us merges.csv.
+        .4 output.
+        .5 \textless section\textgreater.
+        .6 \textless ...\textgreater.
+        .2 run.
+        .3 jobs.
+        .4 \textless method\textgreater.sh.
+        .3 logs.
+        .4 \textless method\textgreater\us \%N\us \%j.err.
+        .4 \textless method\textgreater\us \%N\us \%j.out.
+    }
+    \caption{Final structure of the directories after a run of the custom pipeline.}
+    \label{fig:directory structure}
+\end{figure}
+
+\subsection*{Segmentations}
+\begin{figure*}[t!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_cpsam_polygons_focus.pdf}
+        \caption{Masks by \textsc{CPSAM}; Input: \inlinepath{morphology-focus}, all channels.}
+        \label{fig:Overlay_cpsam}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_dinocell_polygonsn.pdf}
+        \caption{Masks by \textsc{DINOCell}; Input: \inlinepath{morphology-focus}, all channels.}
+        \label{fig:Overlay_dino}
+    \end{subfigure}%
+    \vskip\baselineskip
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_dissect_polygonsn.pdf}
+        \caption{Masks by \textsc{DISSECT}; Input: \inlinepath{morphology-focus}, all channels, and \inlinepath{transcripts}, located in the section and relative to its origin.}
+        \label{fig:Overlay_dissect}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_stardist_polygons_focus.pdf}
+        \caption{Masks by \textsc{StarDist}; Input: \inlinepath{morphology-focus}, DAPI channel.}
+        \label{fig:Overlay_stardist}
+    \end{subfigure}%
+    \caption{Outlines of the predicted masks (white), overlayed on top of the \inlinepath{morphology-focus} image (blue: DAPI; cyan: ATP1A1/CD45/E-Cadherin; magenta: 18s rRNA; yellow: alphaSMA/Vimentin).}
+    \label{fig:Outlines_0}
+\end{figure*}
+
+\begin{figure*}[t!]
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_mesmer_polygons_mt.pdf}
+        \caption{Masks by \textsc{Mesmer}; Input: \inlinepath{morphology-focus}, DAPI channel with empty membrane/cytoplasm channel.}
+        \label{fig:Overlay_mesmer_mt}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_mesmer_polygons_mem.pdf}
+        \caption{Masks by \textsc{Mesmer}; Input: \inlinepath{morphology-focus}, DAPI channel and ATP1A1/CD45/E-Cadherin channel.}
+        \label{fig:Overlay_mesmer_mem}
+    \end{subfigure}%
+    \vskip\baselineskip
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_mesmer_polygons_ribo.pdf}
+        \caption{Masks by \textsc{Mesmer}; Input: \inlinepath{morphology-focus}, DAPI channel and 18s rRNA channel
+        \label{fig:Overlay_mesmer_ribo}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_mesmer_polygons_cyto.pdf}
+        \caption{Masks by \textsc{Mesmer}; Input: \inlinepath{morphology-focus}, DAPI channel and alphaSMA/Vimentin channel.}
+        \label{fig:Overlay_mesmer_cyto}
+    \end{subfigure}%
+    \caption{Outlines of the predicted masks (white), overlayed on top of the \inlinepath{morphology-focus} image (blue: DAPI; cyan: ATP1A1/CD45/E-Cadherin; magenta: 18s rRNA; yellow: alphaSMA/Vimentin).}
+    \label{fig:Outlines_1}
+\end{figure*}
+
+\begin{figure*}[t!]
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_proseg_cell-polygon-layers.geojson0.pdf}
+        \caption{"Layer 0"-masks by \textsc{ProSeg}; Input: \inlinepath{transcripts}, located in the section and relative to its origin.}
+        \label{fig:Overlay_proseg_0}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_proseg_cell-polygon-layers.geojson1.pdf}
+        \caption{"Layer 1"-masks  by \textsc{ProSeg}; Input: \inlinepath{transcripts}, located in the section and relative to its origin.}
+        \label{fig:Overlay_proseg_1}
+    \end{subfigure}%
+    \vskip\baselineskip    
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_proseg_cell-polygon-layers.geojson2.pdf}
+        \caption{"Layer 2"-masks  by \textsc{ProSeg}; Input: \inlinepath{transcripts}, located in the section and relative to its origin.}
+        \label{fig:Overlay_proseg_2}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_proseg_cell-polygons.geojsonall.pdf}
+        \caption{Projection of all layers by \textsc{ProSeg}; Input: \inlinepath{transcripts}, located in the section and relative to its origin.}
+        \label{fig:Overlay_proseg_a}
+    \end{subfigure}
+    \caption{Outlines of the predicted masks (white), overlayed on top of the \inlinepath{morphology-focus} image (blue: DAPI; cyan: ATP1A1/CD45/E-Cadherin; magenta: 18s rRNA; yellow: alphaSMA/Vimentin).}
+    \label{fig:Outlines_2}
+\end{figure*}
+
+\begin{figure*}[t!]
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_segger_cell_polygons.pdf}
+        \caption{Cell-masks by \textsc{segger}; Input: \inlinepath{Xenium-output}, unprocessed.}
+        \label{fig:Overlay_segger_cel}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_segger_nucleus_polygons.pdf}
+        \caption{Nucleus-masks by \textsc{segger}; Input: \inlinepath{Xenium-output}, unprocessed.}
+        \label{fig:Overlay_segger_nuc}
+    \end{subfigure}%
+    \vskip\baselineskip
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_xenium_cell_polygons.pdf}
+        \caption{Cell-masks by \textsc{XOA}; Input: DAPI, 18s and ATP1A1/CD45/E-Cadherin stainings.}
+        \label{fig:Overlay_XOA_cel}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/SI/outlines/outline_xenium_nucleus_polygons.pdf}
+        \caption{Nucleus-masks by \textsc{XOA}; Input: DAPI stainings.}
+        \label{fig:Overlay_XOA_nuc}
+    \end{subfigure}%
+    \caption{Outlines of the predicted masks (white), overlayed on top of the \inlinepath{morphology-focus} image (blue: DAPI; cyan: ATP1A1/CD45/E-Cadherin; magenta: 18s rRNA; yellow: alphaSMA/Vimentin).}
+    \label{fig:Outlines_3}
+\end{figure*}
+
+\subsection*{Panel}
+% \newpage
+% \input{data/Xenium_mMulti_v1_metadata_JS_final 1(sortiert nach Organ)}
+% \newpage
+\input{data/formated_Xenium_mMulti_v1_metadata_JS_final 1(additional genes_explanation)}
+\newpage

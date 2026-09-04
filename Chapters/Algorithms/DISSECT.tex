@@ -1,7 +1,7 @@
 \subsection*{\color{dissect}\textsc{DISSECT}}
--- We actually got a paper in early July: doi.org/10.1038/s43588-026-01020-x -- \\
-DISSECT is a tool developed to combine cytological image segmentation with SRT guided fine-tuning, thus it is one of the few algorithms incorporating the SRT data provided by the Xenium platform. ... encode image to feature map ... denoisewith U-Net ... DCN for smth ... Refinement of image and transcript segmentation masks via gradient field. ... 
-Input is the SRT table in csv or tsv format, a multichannel input image ... Output is a single, labled bitmap. the z-coords of the srt-table are ignored.
+Developed to combine cytological image segmentation with SRT guided fine-tuning, thus one of the few algorithms incorporating SRT data, \textsc{DISSECT} performs single-cell segmentation utilising the Mask R-CNN implementation \textsc{Detectron}. \cite{he_integrating_2026}\\
+Feature maps, transduced by a feature pyramid network (FPN), transit a Gaussian noise and denoising tandem-model, latently adapting the entire model to noisy images. The model continues by constructing an individual but feature-map related pixel-wise likelihood map, embedding awareness on cell-object separation, using two DCNs (deformable convolutional networks). Finally, a decoder, administering the two maps, proposes cell-bounding boxes, which are refined by gradient fields of image- and transcript-data.\\
+As the architecture mandates, input is a, electively multi-channel, image and a corresponding, two-dimensional SRT-table. \textsc{DISSECT} returns a single, labelled bitmap of cell-masks.
 % "combines cytological image segmentation with transcriptome-guided fine-tuning"
 % pre-trained
 % "unifying the gradient fields of cytological images and transcriptomics data"

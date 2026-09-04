@@ -1,7 +1,7 @@
 \subsection*{\color{mesmer}\textsc{DeepCell-Mesmer}}
 DeepCells deep-learning model \textsc{Mesmer} is trained on the extensive TissueNet dataset, with a diverse set of tissues allowing a transfer of knowledge over a diversity of tissue types --- constrained to the imaging methods available. The architecture is a ResNet50 coupled to a feature pyramid network. This architecture enables semantic feature extraction with a consistent convergence in training on large datasets. \cite{greenwald_whole-cell_2022}\cite{lin_feature_2017}\\
-The input requires a normalized nucleus channel and a normalized membrane or cytoplasm channel, passed through the residual network backbone with skip connections to the feature pyramid. From this state the centre and shape of the cell are inferred, by watershed calculations extended to full-sized cells.\\
-Since the requirements to run \textsc{Mesmer} include two channel inputs, a 3D segmentation on Xenium data is only possible if one provides sequential images of multiple runs.\\
+The input requires a nucleus- and membrane- or cytoplasm-channel, self-normalized to $\in (0,1)$, these are passed through the residual network backbone and the feature pyramid. Skip-connections transfer information directly from the ResNet50 to the feature pyramid, potentially moderating the acquisition of features by favouring partial functions. From this state the centre and shape of the cell are inferred, watershed calculations extend to full-sized cells.\\
+Since the requirements to run \textsc{Mesmer} include two channel inputs, a 3D segmentation on \textsc{Xenium} data, which provides only DAPI 3D-resolved, is not possible. \textsc{Mesmer} returns a nucleus- and a cell-prediction bitmap.\\
 % deep-learning-enabled segmentation algorithm
 % requires two channels as input
 % ResNet50-backbone

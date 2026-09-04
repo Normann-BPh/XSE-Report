@@ -854,6 +854,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 % ------------------------------------------------------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\figref[1]{\textup{{\normalfont Fig.~\ref{#1}}\normalfont}}
+\newcommand\tabref[1]{\textuo{{\normalfont Tab.~\ref{#1}}\normalfont}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % 
 \endinput

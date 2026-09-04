@@ -1,5 +1,5 @@
 \section*{Pipeline}
-The custom pipeline at the centre of this project prepares the Xenium-output for the algorithms in this lineup. It continue by preparing their output, evaluating and finally visualizes the results. All functions (preparation, segmentation, visualization) can be run separately via their respective scripts. The configuration is performed using \textsc{toml} files. Each section of the file will be explained below with a tandem explanation of what the pipeline does.\\
+The custom pipeline at the centre of this project prepares the Xenium-output for the algorithms in this line-up. It continues by preparing the prediction-output, evaluates the masks and finally visualizes the results. All functions (preparation, segmentation, visualization) can be run separately via their respective scripts. The configuration is performed using \textsc{toml} files. Each section of the file will be explained below with a tandem explanation of what the pipeline does.\\
 The main file is hard-coded for the high performance cluster (HPC) of the Berlin Institute of Health (BIH). Running this pipeline on a different HPC or on the a personal machine necessitates adaptation.
 \begin{figure*}[ht]
     \centering
@@ -29,7 +29,7 @@ The pipeline requires the data-location and output-directory to be set beforehan
     \item[] \inlinepath{home/sample\us name/results/\textless method \textgreater/}: predictions and evaluation;
     \item[] \inlinepath{home/sample\us name/run/}: logs and job-files.
 \end{itemize}
-The \inlinecode{data\us path} variable must be link to an unedited, unzipped Xenium-output directory. This requirement is imposed by {\color{segger} \textsc{segger}}. If {\color{segger} \textsc{segger}} is excluded, then the content as shown in the introduction suffices.\\
+The \inlinecode{data\us path} variable must link to an unedited, unzipped \textsc{Xenium}-output directory. This requirement is imposed by {\color{segger} \textsc{segger}}. If {\color{segger} \textsc{segger}} is excluded, then the content as shown in \figref{fig:XenOut} suffices.\\
 If an evaluation with a reference-based method should be performed, then a ground truth must be prepared as a bitmap in \textsc{tif}-format and provided as a path with \inlinecode{gt\us path}. Additionally, the coordinates of the ground-truth must be written in a \textsc{json} file, and linked to in \inlinecode{sections\us path}.\\
 % caption={config - paths}
 \begin{lstlisting}[style=customIni]
@@ -127,11 +127,11 @@ Using either the detected regions or the coordinates from \inlinepath{sections\u
     \item[] \inlinepath{morphology}: morphology\us focus images, the DAPI image as multi-layers in OME-TIFF format, and the DAPI image as single-layers in TIFF format.
     \item[] \inlinepath{transcripts} table of transcript location with coordinates in pixel format relative to the section origin
 \end{itemize}
-The layers kept are set by the \inlinecode{planes} variable --- a list/array containing the indices of the layers in the morphology image --- since not all layers contain comparable amounts of information, as more fluorophores are moved out of the focus-plane.\\
+The layers kept are set by the \inlinecode{planes} variable --- a list/array containing the indices of the layers in the morphology image --- since not all layers contain comparable amounts of information, as more fluorophores are out of the focus-plane.\\
 % the images, morphology and focus, split into the detected (\inlinecode{n\us roi} tells the pipeline how many regions of interest, how many punches, are expected), or provided, punch(es), each ROI in a separate folder, morphology additionally separated into chunks and layers (the layers in all images are defined by the \inlinecode{planes} variable).\\
-If the sections are expected to be of significant size, or retain more layers crucial for the segmentation, then the user can provide a number of chunks to split the images. \inlinecode{chunks} must be the integer-root of a quadratic integer. The overlap between the chunks is defined by \inlinecode{overlap}.\\
+If the sections are expected to be of significant size, or retain more layers crucial for the segmentation, then the user can provide a number of chunks to split the images. \inlinecode{chunks} must be the integer-root of a quadratic integer. The overlap between the chunks is defined by \inlinecode{overlap}. The example would extend each chunk by 5\% in width and height.\\
 \subsection*{Segmentation}
-The parameters of the segmentation are configured for each algorithm individually. To adjust which algorithms are run, exclude their parameters and the table name \inlinecode{[methods.\textless method\textgreater]} from the configuration file. \\
+The parameters of the segmentation are configured for each algorithm individually. To adjust which algorithms are applied, exclude their parameters and the table name \inlinecode{[methods.\textless method\textgreater]} from the configuration file. \\
 The variables following the table-name are model specific. Consult the documentation of the respective model for a more in-depth explanation of the settings, than is given in the \href{https://github.com/AG-Sawitzki/XenSegEval/blob/main/config.toml}{default configuration file}. Information on model or wrapper definition can be found at the beginning of each parameter-table.\\
 \subsection*{Evaluation}
 To configure the evaluation, modify the variables under \inlinecode{[evaluation]}
@@ -166,7 +166,7 @@ include_gt = false
 As discussed in the evaluation, four methods can be applied on the model-predictions. The \inlinecode{use}-variables enable/disable the respective method.\\
 For the cross-evaluation the metric and, if the scripts of \inlineprogram{U4N} are used, the threshold, a value between 0.5 and 1, can be specified by the user.\\
 \subsection*{Plotting}
-Which plots should be generated is adjusted with the variables in \inlinecode{[plotting]}. For further customisation, modify the module \inlineprogram{XenSegEval.plotting}.
+Which plots should be generated is adjusted with the variables in \inlinecode{[plotting]}. For further customisation, modify the module \inlineprogram{XenSegEval.plotting}. The user can also set custom colours. The \inlinecode{cmap}-colours may be renamed but not changed in amount. The colours for the algorithms must adhere to the naming convention in \inlinecode{[methods]}, but can be extended upon addition of other algorithms.
 \begin{lstlisting}[style=customIni]
 [plotting]
 cross = false
@@ -192,52 +192,3 @@ charite-mango = '#fab600'
 charite-rot = '#e31f2c'
 \end{lstlisting}
 % 
-\vspace{8pt}
-\begin{figure}[ht]
-    \label{fig:directory structure}
-    \dirtree{%
-        .1 \textless sample name\textgreater.
-        .2 processed.
-        .3 \textless section\textgreater.
-        .4 boundaries.
-        .5 cell\us relative.parquet.
-        .5 nucleus\us relative.parquet.
-        .4 morphology.
-        .5 focus.
-        .6 focus.ome.tif.
-        .6 quartered.
-        .7 q0\%c.ome.tif.
-        .5 multi\us layer.
-        .6 morphology.ome.tif.
-        .6 quartered.
-        .7 q0\%c.ome.tif.
-        .5 single\us layer.
-        .6 layer0\%L.
-        .7 morphology.tif.
-        .7 quatered.
-        .8 q0\%c.tif.
-        .4 transcripts.
-        .5 relative.csv.
-        .5 relative.parquet.
-        .3 marked\us regions-of-interest.tif.
-        .3 sections\us px.json.
-        .2 results.
-        .3 \textless method\textgreater.
-        .4 evaluation.
-        .5 \textless section\textgreater.
-        .6 layer.
-        .7 DC-TOOLS.csv.
-        .7 false\us negatives.csv.
-        .7 results.csv.
-        .7 split\us merges.csv.
-        .4 output.
-        .5 \textless section\textgreater.
-        .6 \textless ...\textgreater.
-        .2 run.
-        .3 jobs.
-        .4 \textless method\textgreater.sh.
-        .3 logs.
-        .4 \textless method\textgreater\us \%N\us \%j.err.
-        .4 \textless method\textgreater\us \%N\us \%j.out.
-    }
-\end{figure}
